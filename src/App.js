@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Home from './Containers/Home/Home';
+import NotFound from './Containers/NotFound/NotFound';
 import { Switch, Route, Link } from 'react-router-dom'
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/test' component={Home}/>
+          <Route component={NotFound}/>
         </Switch>
       </div>
     );

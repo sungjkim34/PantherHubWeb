@@ -23,6 +23,7 @@ export default class Home extends Component {
                 } else {
                     console.log('successfully logged in');
                     console.log(res);
+                    // this.props.history.push('/loggedInRout')
                 }
             });
     }
