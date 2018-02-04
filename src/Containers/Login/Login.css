@@ -1,0 +1,29 @@
+.login-container {
+    padding: 10px;
+}
+
+.login-container img {
+    margin: auto;
+}
+
+.login-header {
+    text-align: center;
+}
+
+.six.wide.field {
+    margin: auto !important;
+}
+
+.fields .ui.button{
+    margin: 15px auto;
+}
+
+.login-button {
+    width: 35%;
+    margin: auto;
+}
+
+.error-message {
+    color: #ff0033;
+    margin: 10px;
+}

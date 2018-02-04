@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Form, Header, Image } from 'semantic-ui-react';
+import { Header, Image } from 'semantic-ui-react';
 import './NotFound.css';
 
 export default class NotFound extends Component {
