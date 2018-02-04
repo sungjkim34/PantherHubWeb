@@ -42,6 +42,7 @@ export default class Home extends Component {
                         </Menu.Item>
                 </Menu>
                 <div className="home-container">
+                    {this.props.accountInfo.accountType === 'admin' && <p>I see you are logged in as admin. TODO: Route to admin page.</p>}
                     <Header as='h2'>PantherHub - Enrollment</Header>
                     <Card fluid header='Student Dashboard' description={`Welcome ${this.state.userInfo.firstName} ${this.state.userInfo.lastName}`}/>
                     <Grid columns={3} divided>
