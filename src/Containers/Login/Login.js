@@ -14,6 +14,12 @@ export default class Login extends Component {
         };
     }
 
+    componentWillMount() {
+        if(this.props.isLoggedIn) {
+            this.props.history.push('/')
+        }
+    }
+
     authUser = () => {
         this.setState({error: ''});
         authUser(this.state.username, this.state.password)

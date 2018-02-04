@@ -1,7 +1,7 @@
 import { serverURL } from '../env';
 
 export const authUser = (username, password) => {
-    const localStorage = window.localStorage;
+    const sessionStorage = window.sessionStorage;
     const uri = `${serverURL}/authUser`
     return fetch(uri, {
         method: 'POST',
@@ -13,8 +13,8 @@ export const authUser = (username, password) => {
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            localStorage.setItem('loggedInUser', JSON.stringify(responseJson));
-            localStorage.setItem('loggedInTime', Date.now());
+            sessionStorage.setItem('loggedInUser', JSON.stringify(responseJson));
+            sessionStorage.setItem('loggedInTime', Date.now());
             return responseJson;
         })
         .catch((error) => {
@@ -23,7 +23,7 @@ export const authUser = (username, password) => {
 }
 
 export const logOutUser = () => {
-    const localStorage = window.localStorage;
-    localStorage.removeItem('loggedInUser');
-    localStorage.removeItem('loggedInTime');
+    const sessionStorage = window.sessionStorage;
+    sessionStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('loggedInTime');
 }

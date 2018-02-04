@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { getUserInfo } from '../../Services/UserService';
-import { logOutUser } from '../../Services/AuthService';
-import { Button, Form, Header, Image } from 'semantic-ui-react';
+import { Button, Form, Header, Image, Menu } from 'semantic-ui-react';
+import { Switch, Route, Link } from 'react-router-dom';
 import './Home.css';
 
 export default class Home extends Component {
@@ -21,17 +21,28 @@ export default class Home extends Component {
     }
 
     logout() {
-        logOutUser();
-        this.props.history.push('/login')
+        this.props.logout();
+        this.props.history.push('/login');
     }
 
     render() {
         return (
             <div className="home-container">
-                <Image src={require('../../Assets/GeorgiaStateLogo.png')} size='medium' />
+                <Menu stackable borderless style={{ backgroundColor: '#fff', border: '1px solid #ddd', boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',}}>
+                        <Menu.Item>
+                            <Image src={require('../../Assets/GeorgiaStateFlatLogo.png')} size='medium' />
+                        </Menu.Item>
+                        <Menu.Item active as={Link} to='/'>Home</Menu.Item>
+                        <Menu.Item as={Link} to='/'>Enrollment</Menu.Item>
+                        <Menu.Item as={Link} to='/'>Finances</Menu.Item>
+                        <Menu.Item as={Link} to='/'>Class</Menu.Item>
+                        <Menu.Item position='right'>
+                            <span style={{marginRight: '10px'}}>Welcome {this.state.userInfo.firstName}</span>
+                            <Button onClick={() => this.logout()} content='Logout' secondary/>
+                        </Menu.Item>
+                </Menu>
                 <Header as='h2'>PantherHub</Header>
                 { this.state.userInfo && <div>Welcome {this.state.userInfo.firstName}</div> }
-                <Button onClick={() => this.logout()} content='Logout' secondary/>
             </div>
         );
     }
