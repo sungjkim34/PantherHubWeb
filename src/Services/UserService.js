@@ -16,7 +16,7 @@ export const getUserInfo = (accountInfo) => {
         return new Promise((resolve, reject) => {
             resolve({
                 firstName: 'admin',
-                lastName: 'admin'
+                lastName: ''
             });
         });
     }
