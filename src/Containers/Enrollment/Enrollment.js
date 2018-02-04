@@ -5,12 +5,12 @@ import './Enrollment.css';
 
 export default class Enrollment extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     renderPage() {
-        const { accountInfo, isLoggedIn, logout, userInfo } = this.props;
+        const { accountInfo, logout, userInfo } = this.props;
 
         return (
             <div className="enrollment-page">
