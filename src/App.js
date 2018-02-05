@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import Chat from './Containers/Chat/Chat';
+import Class from './Containers/Class/Class';
 import Home from './Containers/Home/Home';
 import Login from './Containers/Login/Login';
 import Enrollment from './Containers/Enrollment/Enrollment';
@@ -63,6 +65,20 @@ class App extends Component {
           }/>
           <Route path='/enrollment' render={(props) =>
             <Enrollment {...props}
+              isLoggedIn={isLoggedIn}
+              userInfo={userInfo}
+              accountInfo={accountInfo}
+              logout={() => this.logout()}/>
+          }/>
+          <Route path='/class' render={(props) =>
+            <Class {...props}
+              isLoggedIn={isLoggedIn}
+              userInfo={userInfo}
+              accountInfo={accountInfo}
+              logout={() => this.logout()}/>
+          }/>
+          <Route path='/chat' render={(props) =>
+            <Chat {...props}
               isLoggedIn={isLoggedIn}
               userInfo={userInfo}
               accountInfo={accountInfo}

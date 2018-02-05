@@ -17,6 +17,9 @@ export default class Evaluation extends Component {
     }
 
     render() {
+
+        const { accountInfo, userInfo } = this.props;
+
         return (
             <Modal
                 open={this.state.open}
@@ -31,8 +34,9 @@ export default class Evaluation extends Component {
                     />
 
                     <Modal.Description>
-                        <Header>Firstname Lastname (todo)</Header>
+                        <Header>{userInfo.firstName} {userInfo.lastName}</Header>
                         <p>Academic Evaluation</p>
+                        <p>TODO: Make service call to get student evaluation information</p>
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>

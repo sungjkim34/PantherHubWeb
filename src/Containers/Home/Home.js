@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Card, Divider, Grid, Header, Image, Loader, Segment } from 'semantic-ui-react';
+import { Button, Card, Divider, Grid, Header, Image, List, Loader, Radio, Segment } from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
 import Evaluation from '../Evaluation/Evaluation';
 import MainMenu from '../MainMenu/MainMenu';
@@ -13,7 +13,8 @@ export default class Home extends Component {
             overallGpa: 3.52,
             totalDue: '$2401.61',
             degree: 'Bachelor of Science',
-            major: 'Computer Science'
+            major: 'Computer Science',
+            tuitionType: 'In State'
         };
     }
 
@@ -21,9 +22,9 @@ export default class Home extends Component {
         const { accountInfo, logout, userInfo } = this.props;
 
         return (
-            <div className="home-page">
+            <div className='home-page'>
                 <MainMenu activeItem='home' firstName={userInfo.firstName} logout={logout}/>
-                <div className="home-container">
+                <div className='home-container'>
                     {accountInfo.accountType === 'admin' && <p>I see you are logged in as admin. TODO: Route to admin page.</p>}
                     <Header as='h2'>PantherHub - Home</Header>
                     <Card fluid header='Student Dashboard' description={`Welcome ${userInfo.firstName} ${userInfo.lastName}`}/>
@@ -41,7 +42,7 @@ export default class Home extends Component {
                                 <span><strong>Overall GPA:</strong></span><span style={{float:'right'}}>{this.state.overallGpa}</span>
                                 <Divider />
                                 <Header as='h3' style={{marginBottom:'0px'}}>Degree(s) and Major OR Pathway</Header>
-                                <p><Evaluation/></p>
+                                <p><Evaluation accountInfo={accountInfo} userInfo={userInfo}/></p>
                                 <span><strong>Degree:</strong></span><span style={{float:'right'}}>{this.state.degree}</span>
                                 <p/>
                                 <span><strong>Major:</strong></span><span style={{float:'right'}}>{this.state.major}</span>
@@ -52,12 +53,27 @@ export default class Home extends Component {
                                 <Header as='h3'>My Bill</Header>
                                 <span><strong>Total Due:</strong></span><span style={{float:'right'}}>{this.state.totalDue}</span>
                                 <Button style={{marginTop:'10px'}} onClick={() => {}} content='Pay Account' fluid primary/>
+                                <Divider />
+                                <span><strong>Tuition Classification:</strong></span><span style={{float:'right'}}>{this.state.tuitionType}</span>
+                                <Divider />
+                                <Header as='h3'>My Financial Aid</Header>
+                                <p style={{color: 'red', marginTop:'10px'}}>Please go to the Enrollment tab and look under the Financial Aid Information section to access financial aid forms.</p>
+                                <p><strong>Aid Year</strong></p>
+                                <Radio label='2017-2018' defaultChecked/>
                             </Segment>
                         </Grid.Column>
                         <Grid.Column>
                             <Segment>
-                                <Header as='h3'>My Financial Aid</Header>
-                                <strong>Aid Year</strong>
+                                <Header as='h3'>Welcome Student</Header>
+                                <p>Georgia State University prohibits the application or use of any unauthorized external hardware, software, or programming technologies to aid in any function performed in GoSOLAR or INB Banner. The use of unauthorized technologies may result in disciplinary action.</p>
+                                <Divider />
+                                <p>The tabs at the top of the page provide quick and easy access to student information you need for a successful term:</p>
+                                <List bulleted>
+                                    <List.Item><strong><u>Home:</u></strong> Review and complete financial aid, make payments, access financial information.</List.Item>
+                                    <List.Item><strong><u>Enrollment:</u></strong> For registration and record transactions and information.</List.Item>
+                                    <List.Item><strong><u>Class:</u></strong> Classes blah blah blah</List.Item>
+                                    <List.Item><strong><u>Chat:</u></strong> Chat blah blah blah</List.Item>
+                                </List>
                             </Segment>
                         </Grid.Column>
                         </Grid.Row>
