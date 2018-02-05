@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Admin from './Containers/Admin/Admin';
 import Chat from './Containers/Chat/Chat';
 import Class from './Containers/Class/Class';
 import Home from './Containers/Home/Home';
@@ -79,6 +80,13 @@ class App extends Component {
           }/>
           <Route path='/chat' render={(props) =>
             <Chat {...props}
+              isLoggedIn={isLoggedIn}
+              userInfo={userInfo}
+              accountInfo={accountInfo}
+              logout={() => this.logout()}/>
+          }/>
+          <Route path='/admin' render={(props) =>
+            <Admin {...props}
               isLoggedIn={isLoggedIn}
               userInfo={userInfo}
               accountInfo={accountInfo}

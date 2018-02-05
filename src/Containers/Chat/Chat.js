@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { Button, Comment, Form, Header, Image, Loader, Menu } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Button, Comment, Form, Header, Image, Loader } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
 import './Chat.css';
 import MainMenu from '../MainMenu/MainMenu';
 import openSocket from 'socket.io-client';
 import { serverURL } from '../../env';
+import { getAllChat } from '../../Services/ChatService';
 import moment from 'moment';
 
 export default class Chat extends Component {
@@ -12,19 +13,33 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // socket: openSocket(serverURL),
+            socket: openSocket(serverURL),
             messageText: '',
             messages: []
         };
         
-        // this.state.socket.on('sendMessage', message => {
-        //     this.setState({messages: [...this.state.messages, message]});
-        // });
+        this.state.socket.on('sendMessage', message => {
+            console.log(message);
+            this.setState({messages: [...this.state.messages, message.message]});
+        });
+    }
+
+    componentDidMount() {
+        getAllChat().then(messages => {
+            this.setState({messages: this.state.messages.concat(messages)});
+        });
     }
 
     sendMessage = () => {
-        console.log(this.state.messageText);
-        // this.state.socket.emit('sendMessage', this.state.messageText, this.props.userInfo, this.props.accountInfo, Date.now());
+        const message = {
+            authorId: this.props.accountInfo.personId,
+            authorType: this.props.accountInfo.accountType,
+            authorFirstName: this.props.userInfo.firstName,
+            authorLastName: this.props.userInfo.lastName,
+            messageText: this.state.messageText,
+            messageDate: Date.now()
+        }
+        this.state.socket.emit('sendMessage', message);
         this.setState({messageText: ''});
     }
 
@@ -45,15 +60,16 @@ export default class Chat extends Component {
                                 </Form.Group>
                             </Form>
                         {
-                            this.state.messages.sort((a, b) => b.date - a.date).map((message, i) =>
+                            // this.state.messages.sort((a, b) => b.date - a.date).map((message, i) =>
+                            this.state.messages.map((message, i) =>
                                 <Comment key={i}>
                                     <Comment.Content>
-                                        <Comment.Author as='span'>{message.name}</Comment.Author>
+                                        <Comment.Author as='span'>{`${message.authorFirstName} ${message.authorLastName}`}</Comment.Author>
                                         <Comment.Metadata>
                                             {/* {i === 0 && <Icon name='alarm'/>} */}
-                                            <div>{moment(message.date).format('MMM DD, YYYY [at] hh:mma')}</div>
+                                            <div>{moment(message.messageDate).format('MMM DD, YYYY [at] hh:mma')}</div>
                                         </Comment.Metadata>
-                                        <Comment.Text>message.text</Comment.Text>
+                                        <Comment.Text>{message.messageText}</Comment.Text>
                                     </Comment.Content>
                                 </Comment>
                             )

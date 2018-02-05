@@ -6,7 +6,7 @@ export default class NotFound extends Component {
 
     render() {
         return (
-            <div className="home-container">
+            <div className="not-found-container">
                 <Image src={require('../../Assets/GeorgiaStateLogo.png')} size='medium' />
                 <Header as='h2'>PantherHub - 404</Header>
                 <p>Page Not Found</p>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Button, Header, Image, Loader, Menu } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Button, Header, Image, Loader } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
 import './Class.css';
 import MainMenu from '../MainMenu/MainMenu';
 

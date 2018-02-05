@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Form, Header, Icon, Image, Modal } from 'semantic-ui-react';
+import { Button, Header, Icon, Image, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 // import './Evaluation.css';
 

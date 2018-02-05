@@ -1,1 +1,11 @@
- 
+.not-found-container {
+    padding: 50px;
+}
+
+.not-found-container img {
+    margin: auto;
+}
+
+.not-found-container h2, .not-found-container p {
+    text-align: center;
+}

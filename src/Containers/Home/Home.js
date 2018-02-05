@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Button, Card, Divider, Grid, Header, Image, List, Loader, Radio, Segment } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Button, Card, Divider, Grid, Header, List, Loader, Radio, Segment } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
 import Evaluation from '../Evaluation/Evaluation';
 import MainMenu from '../MainMenu/MainMenu';
 import './Home.css';
@@ -85,10 +85,10 @@ export default class Home extends Component {
 
     render() {
 
-        const { isLoggedIn, userInfo } = this.props;
+        const { isLoggedIn, userInfo, accountInfo } = this.props;
 
         return (
-            userInfo ? this.renderPage() :
+            userInfo ? accountInfo.accountType === 'student' ? this.renderPage() : <Redirect to='/admin' /> :
             isLoggedIn ? <div><Loader active size='massive'>Loading</Loader></div> : 
                 <Redirect to='/login' />
         );
