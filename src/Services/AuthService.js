@@ -13,8 +13,10 @@ export const authUser = (username, password) => {
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            sessionStorage.setItem('loggedInUser', JSON.stringify(responseJson));
-            sessionStorage.setItem('loggedInTime', Date.now());
+            if(!Array.isArray(responseJson)){
+                sessionStorage.setItem('loggedInUser', JSON.stringify(responseJson));
+                sessionStorage.setItem('loggedInTime', Date.now());
+            }
             return responseJson;
         })
         .catch((error) => {

@@ -5,7 +5,7 @@ import './Chat.css';
 import MainMenu from '../MainMenu/MainMenu';
 import openSocket from 'socket.io-client';
 import { serverURL } from '../../env';
-import { getAllChat } from '../../Services/ChatService';
+import { getAllChat, deleteMessage } from '../../Services/ChatService';
 import moment from 'moment';
 
 export default class Chat extends Component {
@@ -43,6 +43,12 @@ export default class Chat extends Component {
         this.setState({messageText: ''});
     }
 
+    deleteMessage = (messageId) => {
+        deleteMessage(messageId).then(res => {
+            this.setState({messages: this.state.messages.filter(message => message.id !== messageId)}); 
+        });
+    }
+
     renderPage() {
         const { accountInfo, logout, userInfo } = this.props;
 
@@ -70,6 +76,9 @@ export default class Chat extends Component {
                                             <div>{moment(message.messageDate).format('MMM DD, YYYY [at] hh:mma')}</div>
                                         </Comment.Metadata>
                                         <Comment.Text>{message.messageText}</Comment.Text>
+                                        {accountInfo.personId === message.authorId && <Comment.Actions>
+                                            <a onClick={() => this.deleteMessage(message.id)}>Delete</a>
+                                        </Comment.Actions>}
                                     </Comment.Content>
                                 </Comment>
                             )
