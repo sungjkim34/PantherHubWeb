@@ -91,7 +91,19 @@ export default class Admin extends Component {
             password: this.state.studentPassword,
         }
         console.log(student.startDate);
-        addStudent(student).then(res => console.log(res));
+        addStudent(student).then(res => {
+            this.setState({
+                studentFirstName: '',
+                studentLastName: '',
+                studentMajor: '',
+                studentDob: '',
+                studentStartDate: '',
+                studentUsername: '',
+                studentPassword: '',
+                usernameExists: false
+            })
+            console.log(res)
+        });
     }
 
     renderMenu() {

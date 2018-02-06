@@ -45,7 +45,7 @@ export default class Home extends Component {
                                 <p><Evaluation accountInfo={accountInfo} userInfo={userInfo}/></p>
                                 <span><strong>Degree:</strong></span><span style={{float:'right'}}>{this.state.degree}</span>
                                 <p/>
-                                <span><strong>Major:</strong></span><span style={{float:'right'}}>{this.state.major}</span>
+                                <span><strong>Major:</strong></span><span style={{float:'right'}}>{this.props.userInfo.major}</span>
                             </Segment>
                         </Grid.Column>
                         <Grid.Column>
