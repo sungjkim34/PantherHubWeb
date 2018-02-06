@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { addStudent } from '../../Services/StudentService';
 import { checkUsername } from '../../Services/UserService';
 import './Admin.css';
-import MainMenu from '../MainMenu/MainMenu';
+import AdminMenu from './AdminMenu';
 import moment from 'moment';
 
 export default class Admin extends Component {
@@ -12,13 +12,15 @@ export default class Admin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            studentFirstName: '',
-            studentLastName: '',
-            studentMajor: '',
-            studentDob: '',
-            studentStartDate: '',
-            studentUsername: '',
-            studentPassword: '',
+            student: {
+                firstName: '',
+                lastName: '',
+                major: '',
+                dob: '',
+                startDate: '',
+                username: '',
+                password: ''
+            },
             majorOptions: [
                 {
                     text: 'Biology',
@@ -37,28 +39,12 @@ export default class Admin extends Component {
                     value: 'Mathematics'
                 }
             ],
-            usernameExists: false,
-            width: 0,
-            height: 0
+            usernameExists: false
         };
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
-
-    componentDidMount() {
-        this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
-    }
-    
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
-    }
-    
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
     enterUsername = (username) => {
-        this.setState({studentUsername: username});
+        this.setState({student: {...this.state.student, username}});
         if(username.replace(/ /g, '') !== ''){
             checkUsername(username).then(res => {
                 this.setState({usernameExists: res});
@@ -67,13 +53,13 @@ export default class Admin extends Component {
     }
 
     isFormValid() {
-        if ((this.state.studentFirstName.replace(/ /g, '') === '') ||
-            (this.state.studentLastName.replace(/ /g, '') === '') ||
-            (this.state.studentMajor.replace(/ /g, '') === '') ||
-            (this.state.studentUsername.replace(/ /g, '') === '') ||
-            (this.state.studentPassword.replace(/ /g, '') === '') ||
-            (!moment(this.state.studentDob, 'YYYY-MM-DD', true).isValid()) ||
-            (!moment(this.state.studentStartDate, 'YYYY-MM-DD', true).isValid()) ||
+        if ((this.state.student.firstName.replace(/ /g, '') === '') ||
+            (this.state.student.lastName.replace(/ /g, '') === '') ||
+            (this.state.student.major.replace(/ /g, '') === '') ||
+            (this.state.student.username.replace(/ /g, '') === '') ||
+            (this.state.student.password.replace(/ /g, '') === '') ||
+            (!moment(this.state.student.dob, 'YYYY-MM-DD', true).isValid()) ||
+            (!moment(this.state.student.startDate, 'YYYY-MM-DD', true).isValid()) ||
             (this.state.usernameExists)) {
             return false
         }
@@ -81,82 +67,26 @@ export default class Admin extends Component {
     }
 
     addStudent = () => {
-        const student = {
-            firstName: this.state.studentFirstName,
-            lastName: this.state.studentLastName,
-            major: this.state.studentMajor,
-            dob: moment(this.state.studentDob).format('YYYY-MM-DD'),
-            startDate: moment(this.state.studentStartDate).format('YYYY-MM-DD'),
-            username: this.state.studentUsername,
-            password: this.state.studentPassword,
-        }
-        console.log(student.startDate);
-        addStudent(student).then(res => {
+        addStudent(this.state.student).then(res => {
             this.setState({
-                studentFirstName: '',
-                studentLastName: '',
-                studentMajor: '',
-                studentDob: '',
-                studentStartDate: '',
-                studentUsername: '',
-                studentPassword: '',
+                student: {...this.state.student, firstName: '', lastName: '', major: '', dob: '', startDate: '', username: '', password: ''},
                 usernameExists: false
-            })
-            console.log(res)
+            });
+            console.log(res);
         });
     }
 
-    renderMenu() {
-
-        const { logout, userInfo } = this.props;
-        
-        const options = [
-            {
-              key: 'user',
-              text: <span>Signed in as <strong>{userInfo.firstName}  {userInfo.lastName}</strong></span>,
-              disabled: true,
-            },
-            // { key: 'profile', text: 'Your Profile', onClick: () => console.log('profile clicked') },
-            { key: 'sign-out', text: 'Sign Out', onClick: () => logout() },
-        ];
-
-        return (
-            <Menu stackable borderless className='menu-bar'>
-                <Menu.Item>
-                    <Image src={require('../../Assets/GeorgiaStateFlatLogo.png')} size='medium' />
-                </Menu.Item>
-                <Menu.Item active as={Link} to='/admin'>Home</Menu.Item>
-                <Menu.Item position='right'>
-                    <Dropdown style={{marginRight:'16px'}} pointing={this.state.width >= 769 && 'top right'} trigger={<span style={{marginRight: '5px'}}><Icon name='user' />{userInfo.firstName}</span>} options={options} />
-                </Menu.Item>
-            </Menu>
-        );
-    }
-
     renderPage() {
-        const { accountInfo, userInfo } = this.props;
+        
+        const { accountInfo, userInfo, logout } = this.props;
 
         return (
             <div className='admin-page'>
-                {this.renderMenu()}
+                {/* {this.renderMenu()} */}
+                <AdminMenu activeItem='admin' userInfo={userInfo} logout={logout}/>
                 <div className='admin-container'>
-                    <Header as='h3'>Add Student</Header>
-                    <Form>
-                        <Form.Group>
-                            <Form.Input label='First Name' placeholder='Enter first name' value={this.state.studentFirstName} onChange={(event, data) => this.setState({studentFirstName: data.value})} width={8} />
-                            <Form.Input label='Last Name' placeholder='Enter last name' value={this.state.studentLastName} onChange={(event, data) => this.setState({studentLastName: data.value})} width={8} />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Input label='Username' error={this.state.usernameExists} placeholder='Enter username' value={this.state.studentUsername} onChange={(event, data) => this.enterUsername(data.value)} width={8} />
-                            <Form.Input label='Password' placeholder='Enter password' value={this.state.studentPassword} onChange={(event, data) => this.setState({studentPassword: data.value})} width={8} />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Input label='Date of Birth' type='date' value={this.state.studentDob} onChange={(event, data) => this.setState({studentDob: data.value})} width={3} />
-                            <Form.Input label='Start Date' type='date' value={this.state.studentStartDate} onChange={(event, data) => this.setState({studentStartDate: data.value})} width={3} />
-                            <Form.Dropdown label='Major' placeholder='Select Major' onChange={(event, data) => this.setState({studentMajor: data.value})} selection options={this.state.majorOptions}/>
-                        </Form.Group>
-                        <Button disabled={!this.isFormValid()} onClick={() => this.addStudent()} icon='add user' content='Add'/>
-                    </Form>
+                    <Header as='h3'>Admin Panel</Header>
+                    <p>Todo: Figure out text to put here</p>
                 </div>
             </div>
         );

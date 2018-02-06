@@ -13,7 +13,6 @@ export default class Home extends Component {
             overallGpa: 3.52,
             totalDue: '$2401.61',
             degree: 'Bachelor of Science',
-            major: 'Computer Science',
             tuitionType: 'In State'
         };
     }
@@ -42,7 +41,7 @@ export default class Home extends Component {
                                 <span><strong>Overall GPA:</strong></span><span style={{float:'right'}}>{this.state.overallGpa}</span>
                                 <Divider />
                                 <Header as='h3' style={{marginBottom:'0px'}}>Degree(s) and Major OR Pathway</Header>
-                                <p><Evaluation accountInfo={accountInfo} userInfo={userInfo}/></p>
+                                <p><Evaluation degreeaccountInfo={accountInfo} userInfo={userInfo}/></p>
                                 <span><strong>Degree:</strong></span><span style={{float:'right'}}>{this.state.degree}</span>
                                 <p/>
                                 <span><strong>Major:</strong></span><span style={{float:'right'}}>{this.props.userInfo.major}</span>

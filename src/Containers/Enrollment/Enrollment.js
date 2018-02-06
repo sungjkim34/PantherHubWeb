@@ -25,10 +25,10 @@ export default class Enrollment extends Component {
 
     render() {
 
-        const { isLoggedIn, userInfo } = this.props;
+        const { accountInfo, isLoggedIn, userInfo } = this.props;
 
         return (
-            userInfo ? this.renderPage() :
+            userInfo ? accountInfo.accountType === 'student' ? this.renderPage() : <Redirect to='/admin' /> :
             isLoggedIn ? <div><Loader active size='massive'>Loading</Loader></div> : 
                 <Redirect to='/login' />
         );

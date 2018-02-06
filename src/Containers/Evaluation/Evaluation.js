@@ -35,8 +35,7 @@ export default class Evaluation extends Component {
 
                     <Modal.Description>
                         <Header>{userInfo.firstName} {userInfo.lastName}</Header>
-                        <p>Academic Evaluation</p>
-                        <p>TODO: Make service call to get student evaluation information</p>
+                        <span><strong>Current Major: </strong></span><span style={{float:'right'}}>{userInfo.major}</span>
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
