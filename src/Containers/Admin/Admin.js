@@ -120,7 +120,7 @@ export default class Admin extends Component {
                             <Form.Input label='Start Date' type='date' value={this.state.studentStartDate} onChange={(event, data) => this.setState({studentStartDate: data.value})} width={3} />
                             <Form.Dropdown label='Major' placeholder='Select Major' onChange={(event, data) => this.setState({studentMajor: data.value})} selection options={this.state.majorOptions}/>
                         </Form.Group>
-                        <Button disabled={!this.isFormValid()} onClick={() => this.addStudent()} icon='add' content='Add'/>
+                        <Button disabled={!this.isFormValid()} onClick={() => this.addStudent()} icon='add user' content='Add'/>
                     </Form>
                 </div>
             </div>
