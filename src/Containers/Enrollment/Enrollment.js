@@ -15,7 +15,7 @@ export default class Enrollment extends Component {
 
         return (
             <div className='enrollment-page'>
-                <MainMenu activeItem='enrollment' firstName={userInfo.firstName} logout={logout}/>
+                <MainMenu activeItem='enrollment' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
                 <div className='enrollment-container'>
                     ENROLLMENT
                 </div>

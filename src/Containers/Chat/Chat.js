@@ -48,7 +48,7 @@ export default class Chat extends Component {
 
         return (
             <div className='chat-page'>
-                <MainMenu activeItem='chat' firstName={userInfo.firstName} logout={logout}/>
+                <MainMenu activeItem='chat' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
                 <div className='chat-container'>
                     <div className='comment-section'>
                         <Comment.Group>

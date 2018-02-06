@@ -23,7 +23,7 @@ export default class Home extends Component {
 
         return (
             <div className='home-page'>
-                <MainMenu activeItem='home' firstName={userInfo.firstName} logout={logout}/>
+                <MainMenu activeItem='home' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
                 <div className='home-container'>
                     {accountInfo.accountType === 'admin' && <p>I see you are logged in as admin. TODO: Route to admin page.</p>}
                     <Header as='h2'>PantherHub - Home</Header>

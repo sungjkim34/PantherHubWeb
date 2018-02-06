@@ -15,7 +15,7 @@ export default class Class extends Component {
 
         return (
             <div className='class-page'>
-                <MainMenu activeItem='class' firstName={userInfo.firstName} logout={logout}/>
+                <MainMenu activeItem='class' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
                 <div className='class-container'>
                     CLASS
                 </div>

@@ -1,13 +1,42 @@
 import React, {Component} from 'react';
-import { Button, Icon, Image, Menu } from 'semantic-ui-react';
+import { Button, Dropdown, Icon, Image, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './MainMenu.css';
 
 export default class MainMenu extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { width: 0, height: 0 };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+      
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+    
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    }
+
     render() {
 
-        const { activeItem, firstName, logout } = this.props;
+        const { activeItem, firstName, lastName, logout } = this.props;
+
+        const options = [
+            {
+              key: 'user',
+              text: <span>Signed in as <strong>{firstName} {lastName}</strong></span>,
+              disabled: true,
+            },
+            { key: 'profile', text: 'Your Profile', onClick: () => console.log('profile clicked') },
+            { key: 'sign-out', text: 'Sign Out', onClick: () => logout() },
+        ];
 
         return (
             <Menu stackable borderless className='menu-bar'>
@@ -19,8 +48,7 @@ export default class MainMenu extends Component {
                 <Menu.Item active={activeItem === 'class'} as={Link} to='/class'>Class</Menu.Item>
                 <Menu.Item active={activeItem === 'chat'} as={Link} to='/chat'>Chat</Menu.Item>
                 <Menu.Item position='right'>
-                    <span style={{marginRight: '10px'}}><Icon name='user' />{firstName}</span>
-                    <Button onClick={() => logout()} content='Logout' secondary/>
+                    <Dropdown style={{marginRight:'16px'}} pointing={this.state.width >= 769 && 'top right'} trigger={<span style={{marginRight: '5px'}}><Icon name='user' />{firstName}</span>} options={options} />
                 </Menu.Item>
             </Menu>
         );

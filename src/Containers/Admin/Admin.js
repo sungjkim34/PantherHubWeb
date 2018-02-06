@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Comment, Form, Header, Icon, Image, Loader, Menu } from 'semantic-ui-react';
+import { Button, Comment, Dropdown, Form, Header, Icon, Image, Loader, Menu } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import { addStudent } from '../../Services/StudentService';
 import { checkUsername } from '../../Services/UserService';
@@ -37,13 +37,26 @@ export default class Admin extends Component {
                     value: 'Mathematics'
                 }
             ],
-            usernameExists: false
+            usernameExists: false,
+            width: 0,
+            height: 0
         };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
     }
     
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+    
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
+    }
+
     enterUsername = (username) => {
         this.setState({studentUsername: username});
         if(username.replace(/ /g, '') !== ''){
@@ -54,14 +67,14 @@ export default class Admin extends Component {
     }
 
     isFormValid() {
-        if (this.state.studentFirstName.replace(/ /g, '') === '' ||
-            this.state.studentLastName.replace(/ /g, '') === '' ||
-            this.state.studentMajor.replace(/ /g, '') === '' ||
-            this.state.studentUsername.replace(/ /g, '') === '' ||
-            this.state.studentPassword.replace(/ /g, '') === '' ||
-            this.state.studentStartDate.replace(/ /g, '') === '' ||
-            this.state.studentDob.replace(/ /g, '') === '' ||
-            this.state.usernameExists) {
+        if ((this.state.studentFirstName.replace(/ /g, '') === '') ||
+            (this.state.studentLastName.replace(/ /g, '') === '') ||
+            (this.state.studentMajor.replace(/ /g, '') === '') ||
+            (this.state.studentUsername.replace(/ /g, '') === '') ||
+            (this.state.studentPassword.replace(/ /g, '') === '') ||
+            (!moment(this.state.studentDob, 'YYYY-MM-DD', true).isValid()) ||
+            (!moment(this.state.studentStartDate, 'YYYY-MM-DD', true).isValid()) ||
+            (this.state.usernameExists)) {
             return false
         }
         return true;
@@ -77,6 +90,7 @@ export default class Admin extends Component {
             username: this.state.studentUsername,
             password: this.state.studentPassword,
         }
+        console.log(student.startDate);
         addStudent(student).then(res => console.log(res));
     }
 
@@ -84,6 +98,16 @@ export default class Admin extends Component {
 
         const { logout, userInfo } = this.props;
         
+        const options = [
+            {
+              key: 'user',
+              text: <span>Signed in as <strong>{userInfo.firstName}  {userInfo.lastName}</strong></span>,
+              disabled: true,
+            },
+            // { key: 'profile', text: 'Your Profile', onClick: () => console.log('profile clicked') },
+            { key: 'sign-out', text: 'Sign Out', onClick: () => logout() },
+        ];
+
         return (
             <Menu stackable borderless className='menu-bar'>
                 <Menu.Item>
@@ -91,8 +115,7 @@ export default class Admin extends Component {
                 </Menu.Item>
                 <Menu.Item active as={Link} to='/admin'>Home</Menu.Item>
                 <Menu.Item position='right'>
-                    <span style={{marginRight: '10px'}}><Icon name='user' />{userInfo.firstName}</span>
-                    <Button onClick={() => logout()} content='Logout' secondary/>
+                    <Dropdown style={{marginRight:'16px'}} pointing={this.state.width >= 769 && 'top right'} trigger={<span style={{marginRight: '5px'}}><Icon name='user' />{userInfo.firstName}</span>} options={options} />
                 </Menu.Item>
             </Menu>
         );

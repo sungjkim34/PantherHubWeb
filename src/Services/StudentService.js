@@ -24,3 +24,14 @@ export const addStudent = (studentInfo) => {
             console.error(error);
         });
 }
+
+export const getAllStudents = () => {
+    const uri = `${serverURL}/getAllStudents`
+    return fetch(uri).then(response => response.json())
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
