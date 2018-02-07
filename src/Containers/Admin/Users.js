@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Comment, Dropdown, Form, Header, Icon, Image, Loader, Tab, Table } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
-import { addStudent, getAllStudents } from '../../Services/StudentService';
-import { addProfessor, getAllProfessors } from '../../Services/ProfessorService';
+import { addStudent, deleteStudent, getAllStudents } from '../../Services/StudentService';
+import { addProfessor, deleteProfessor, getAllProfessors } from '../../Services/ProfessorService';
 import { checkUsername } from '../../Services/UserService';
 import './Admin.css';
 import AdminMenu from './AdminMenu';
@@ -106,6 +106,13 @@ export default class Users extends Component {
         });
     }
 
+    deleteProfessor = (professorId) => {
+        deleteProfessor(professorId).then(res => {
+            this.setState({professors: this.state.professors.filter(professor => professor.id !== professorId)}); 
+            console.log(res);
+        });
+    }
+
     addCourse = () => {
         console.log(this.state.course);
     }
@@ -177,7 +184,7 @@ export default class Users extends Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Input label='Date of Birth' type='date' value={this.state.professor.dob} onChange={(event, data) => this.setState({professor: {...this.state.professor, dob: data.value}})} width={3} />
-                        <Form.Dropdown label='Department' placeholder='Select Department' onChange={(event, data) => this.setState({professor: {...this.state.professor, departmentId: data.value}})} selection options={DEPARTMENT_OPTIONS}/>
+                        <Form.Dropdown label='Department' value={this.state.professor.departmentId} placeholder='Select Department' onChange={(event, data) => this.setState({professor: {...this.state.professor, departmentId: data.value}})} selection options={DEPARTMENT_OPTIONS}/>
                     </Form.Group>
                     {/* <Button disabled={!this.isFormValid()} onClick={() => this.addProfessor()} icon='add user' content='Add'/> */}
                     <Button onClick={() => this.addProfessor()} icon='add user' content='Add'/>
@@ -190,6 +197,7 @@ export default class Users extends Component {
                             <Table.HeaderCell>Last Name</Table.HeaderCell>
                             <Table.HeaderCell>DOB</Table.HeaderCell>
                             <Table.HeaderCell>Department ID</Table.HeaderCell>
+                            <Table.HeaderCell></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -202,6 +210,10 @@ export default class Users extends Component {
                                         <Table.Cell>{professor.lastName}</Table.Cell>
                                         <Table.Cell>{moment(professor.dob).format('MM-DD-YYYY')}</Table.Cell>
                                         <Table.Cell>{professor.departmentId}</Table.Cell>
+                                        <Table.Cell collapsing>
+                                            <Icon link size='large' color='blue' name='edit' />
+                                            <Icon link size='large' color='red' name='delete' onClick={() => this.deleteProfessor(professor.id)} />
+                                        </Table.Cell>
                                     </Table.Row>
                                 );
                             })

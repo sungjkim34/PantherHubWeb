@@ -35,3 +35,20 @@ export const getAllStudents = () => {
             console.error(error);
         });
 }
+
+export const deleteStudent = (studentId) => {
+    var uri = `${serverURL}/deleteStudent`;
+    return fetch(uri, {
+        method: 'POST',
+        body: JSON.stringify({
+            studentId
+        }), 
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => console.log(responseJson))
+        .catch((error) => {
+            console.error(error);
+        });   
+}

@@ -53,3 +53,20 @@ export const checkUsername = (username) => {
                 console.error(error);
             });
 }
+
+export const deleteAccount = (accountId) => {
+    var uri = `${serverURL}/deleteAccount`;
+    return fetch(uri, {
+        method: 'POST',
+        body: JSON.stringify({
+            accountId
+        }), 
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => console.log(responseJson))
+        .catch((error) => {
+            console.error(error);
+        });   
+}

@@ -34,3 +34,20 @@ export const getAllProfessors = () => {
             console.error(error);
         });
 }
+
+export const deleteProfessor = (professorId) => {
+    var uri = `${serverURL}/deleteProfessor`;
+    return fetch(uri, {
+        method: 'POST',
+        body: JSON.stringify({
+            professorId
+        }), 
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => console.log(responseJson))
+        .catch((error) => {
+            console.error(error);
+        });   
+}
