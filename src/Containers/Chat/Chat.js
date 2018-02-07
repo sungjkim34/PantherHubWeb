@@ -3,6 +3,7 @@ import { Button, Comment, Form, Header, Image, Loader } from 'semantic-ui-react'
 import { Redirect } from 'react-router-dom';
 import './Chat.css';
 import MainMenu from '../MainMenu/MainMenu';
+import AdminMenu from '../Admin/AdminMenu';
 import openSocket from 'socket.io-client';
 import { serverURL } from '../../env';
 import { getAllChat, deleteMessage } from '../../Services/ChatService';
@@ -19,7 +20,6 @@ export default class Chat extends Component {
         };
         
         this.state.socket.on('sendMessage', message => {
-            console.log(message);
             this.setState({messages: [...this.state.messages, message.message]});
         });
     }
@@ -28,6 +28,11 @@ export default class Chat extends Component {
         getAllChat().then(messages => {
             this.setState({messages: this.state.messages.concat(messages)});
         });
+    }
+
+    componentWillUnmount() {
+        this.state.socket.disconnect();
+        this.state = {};
     }
 
     sendMessage = () => {
@@ -54,7 +59,11 @@ export default class Chat extends Component {
 
         return (
             <div className='chat-page'>
-                <MainMenu activeItem='chat' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
+                {
+                    accountInfo.accountType === 'student' ?
+                        <MainMenu activeItem='chat' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/> :
+                        <AdminMenu activeItem='chat' userInfo={userInfo} logout={logout}/>
+                }
                 <div className='chat-container'>
                     <div className='comment-section'>
                         <Comment.Group>
@@ -70,15 +79,18 @@ export default class Chat extends Component {
                             this.state.messages.map((message, i) =>
                                 <Comment key={i}>
                                     <Comment.Content>
-                                        <Comment.Author as='span'>{`${message.authorFirstName} ${message.authorLastName}`}</Comment.Author>
+                                        <Comment.Author style={{color: message.authorType === 'admin' ? '#DA4167' : message.authorType === 'professor' ? '#4392F1' : undefined}} as='span'>{`${message.authorFirstName} ${message.authorLastName}`}</Comment.Author>
                                         <Comment.Metadata>
                                             {/* {i === 0 && <Icon name='alarm'/>} */}
                                             <div>{moment(message.messageDate).format('MMM DD, YYYY [at] hh:mma')}</div>
                                         </Comment.Metadata>
                                         <Comment.Text>{message.messageText}</Comment.Text>
-                                        {accountInfo.personId === message.authorId && <Comment.Actions>
-                                            <a onClick={() => this.deleteMessage(message.id)}>Delete</a>
-                                        </Comment.Actions>}
+                                        {
+                                            (accountInfo.personId === message.authorId || accountInfo.accountType === 'admin') &&
+                                                <Comment.Actions>
+                                                    <a onClick={() => this.deleteMessage(message.id)}>Delete</a>
+                                                </Comment.Actions>
+                                        }
                                     </Comment.Content>
                                 </Comment>
                             )
@@ -94,10 +106,21 @@ export default class Chat extends Component {
 
         const { accountInfo, isLoggedIn, userInfo } = this.props;
 
-        return (
-            userInfo ? accountInfo.accountType === 'student' ? this.renderPage() : <Redirect to='/admin' /> :
-            isLoggedIn ? <div><Loader active size='massive'>Loading</Loader></div> : 
-                <Redirect to='/login' />
-        );
+        // return (
+        //     userInfo ? accountInfo.accountType === 'student' ? this.renderPage() : <Redirect to='/admin' /> :
+        //     isLoggedIn ? <div><Loader active size='massive'>Loading</Loader></div> : 
+        //         <Redirect to='/login' />
+        // );
+
+        if (userInfo) {
+            if(accountInfo.accountType === 'student') return this.renderPage();
+            else if (accountInfo.accountType === 'professor') return this.renderPage();
+            else if (accountInfo.accountType === 'admin') return this.renderPage();
+            else return <Redirect to='/login' />
+        } else if (isLoggedIn){
+            return <div><Loader active size='massive'>Loading</Loader></div>;
+        } else {
+            return <Redirect to='/login' />
+        }
     }
 }

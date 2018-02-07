@@ -16,8 +16,11 @@ export const addProfessor = (professorInfo) => {
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            registerUser(professorInfo.username, professorInfo.password, 'professor', responseJson.insertId)
-                .then(res => console.log(res));
+            return registerUser(professorInfo.username, professorInfo.password, 'professor', responseJson.insertId, responseJson)
+                .then(res => {
+                    const result = {professorRes: responseJson, userRes: res};
+                    return result;
+                });
         })
         .catch((error) => {
             console.error(error);

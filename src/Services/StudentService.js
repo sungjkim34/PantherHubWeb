@@ -17,8 +17,11 @@ export const addStudent = (studentInfo) => {
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            registerUser(studentInfo.username, studentInfo.password, 'student', responseJson.insertId)
-                .then(res => console.log(res));
+            return registerUser(studentInfo.username, studentInfo.password, 'student', responseJson.insertId, responseJson)
+                .then(res => {
+                    const result = {studentRes: responseJson, userRes: res};
+                    return result;
+                });
         })
         .catch((error) => {
             console.error(error);

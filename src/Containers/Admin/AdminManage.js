@@ -51,11 +51,18 @@ export default class AdminManage extends Component {
 
     addStudent = (student) => {
         addStudent(student).then(res => {
-            // this.setState({
-            //     student: {...this.state.student, firstName: '', lastName: '', major: '', dob: '', startDate: '', username: '', password: ''},
-            //     usernameExists: false
-            // });
-            console.log(res);
+            this.setState({
+                students: 
+                    [
+                        ...this.state.students, 
+                        {id: res.studentRes.insertId, firstName: student.firstName, lastName: student.lastName, dob: student.dob, major: student.major, startDate: student.startDate}
+                    ],
+                accounts:
+                    [
+                        ...this.state.accounts,
+                        {id: res.userRes.insertId, username: student.username, password: student.password, accountType: 'student', personId: res.studentRes.insertId}
+                    ]
+            });
         });
     }
 
@@ -70,13 +77,20 @@ export default class AdminManage extends Component {
     }
 
     addProfessor = (professor) => {
-        console.log(professor);
         addProfessor(professor).then(res => {
-            // this.setState({
-            //     professor: {...this.state.student, firstName: '', lastName: '', dob: '', departmentId: undefined, username: '', password: ''},
-            //     usernameExists: false
-            // });
             console.log(res);
+            this.setState({
+                professors: 
+                    [
+                        ...this.state.professors, 
+                        {id: res.professorRes.insertId, firstName: professor.firstName, lastName: professor.lastName, departmentId: professor.departmentId, dob: professor.dob}
+                    ],
+                accounts:
+                    [
+                        ...this.state.accounts,
+                        {id: res.userRes.insertId, username: professor.username, password: professor.password, accountType: 'professor', personId: res.professorRes.insertId}
+                    ]
+            });
         });
     }
 

@@ -45,6 +45,7 @@ export default class AdminMainMenu extends Component {
                 </Menu.Item>
                 <Menu.Item active={activeItem === 'admin'} as={Link} to='/admin'>Home</Menu.Item>
                 <Menu.Item active={activeItem === 'adminManage'} as={Link} to='/adminManage'>Manage</Menu.Item>
+                <Menu.Item active={activeItem === 'chat'} as={Link} to='/chat'>Chat</Menu.Item>
                 <Menu.Item position='right'>
                     <Dropdown style={{marginRight:'16px'}} pointing={this.state.width >= 769 && 'top right'} trigger={<span style={{marginRight: '5px'}}><Icon name='user' />{userInfo.firstName}</span>} options={options} />
                 </Menu.Item>
