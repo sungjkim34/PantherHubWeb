@@ -12,7 +12,7 @@ export default class ProfessorTab extends Component {
             professor: {
                 firstName: '',
                 lastName: '',
-                departmentId: undefined,
+                departmentId: '',
                 dob: '',
                 username: '',
                 password: ''
@@ -21,7 +21,6 @@ export default class ProfessorTab extends Component {
         };
     }
 
-    // Todo: merge student and professor if possible
     enterUsername = (username) => {
         this.setState({professor: {...this.state.professor, username}});
         if(username.replace(/ /g, '') !== ''){
@@ -32,15 +31,14 @@ export default class ProfessorTab extends Component {
     }
 
     isFormValid() {
-        if ((this.state.student.firstName.replace(/ /g, '') === '') ||
-            (this.state.student.lastName.replace(/ /g, '') === '') ||
-            (this.state.student.major.replace(/ /g, '') === '') ||
-            (this.state.student.username.replace(/ /g, '') === '') ||
-            (this.state.student.password.replace(/ /g, '') === '') ||
-            (!moment(this.state.student.dob, 'YYYY-MM-DD', true).isValid()) ||
-            (!moment(this.state.student.startDate, 'YYYY-MM-DD', true).isValid()) ||
+        if ((this.state.professor.firstName.replace(/ /g, '') === '') ||
+            (this.state.professor.lastName.replace(/ /g, '') === '') ||
+            (this.state.professor.username.replace(/ /g, '') === '') ||
+            (this.state.professor.password.replace(/ /g, '') === '') ||
+            (this.state.professor.departmentId.replace(/ /g, '') === '') ||
+            (!moment(this.state.professor.dob, 'YYYY-MM-DD', true).isValid()) ||
             (this.state.usernameExists)) {
-            return false
+            return false;
         }
         return true;
     }
@@ -71,8 +69,7 @@ export default class ProfessorTab extends Component {
                         <Form.Input label='Date of Birth' type='date' value={this.state.professor.dob} onChange={(event, data) => this.setState({professor: {...this.state.professor, dob: data.value}})} width={3} />
                         <Form.Dropdown label='Department' value={this.state.professor.departmentId} placeholder='Select Department' onChange={(event, data) => this.setState({professor: {...this.state.professor, departmentId: data.value}})} selection options={DEPARTMENT_OPTIONS}/>
                     </Form.Group>
-                    {/* <Button disabled={!this.isFormValid()} onClick={() => this.addProfessor()} icon='add user' content='Add'/> */}
-                    <Button onClick={() => this.addProfessor()} icon='add user' content='Add'/>
+                    <Button disabled={!this.isFormValid()} onClick={() => this.addProfessor()} icon='add user' content='Add'/>
                 </Form>
                 <Table celled selectable>
                     <Table.Header>
