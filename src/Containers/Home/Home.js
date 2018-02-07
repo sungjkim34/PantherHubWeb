@@ -86,10 +86,21 @@ export default class Home extends Component {
 
         const { isLoggedIn, userInfo, accountInfo } = this.props;
 
-        return (
-            userInfo ? accountInfo.accountType === 'student' ? this.renderPage() : <Redirect to='/admin' /> :
-            isLoggedIn ? <div><Loader active size='massive'>Loading</Loader></div> : 
-                <Redirect to='/login' />
-        );
+        // return (
+        //     userInfo ? accountInfo.accountType === 'student' ? this.renderPage() : <Redirect to='/admin' /> :
+        //     isLoggedIn ? <div><Loader active size='massive'>Loading</Loader></div> : 
+        //         <Redirect to='/login' />
+        // );
+
+        if (userInfo) {
+            if(accountInfo.accountType === 'student') return this.renderPage();
+            else if (accountInfo.accountType === 'professor') return this.renderPage();
+            else if (accountInfo.accountType === 'admin') return <Redirect to='/admin' />;
+            else return <Redirect to='/login' />
+        } else if (isLoggedIn){
+            return <div><Loader active size='massive'>Loading</Loader></div>;
+        } else {
+            return <Redirect to='/login' />
+        }
     }
 }

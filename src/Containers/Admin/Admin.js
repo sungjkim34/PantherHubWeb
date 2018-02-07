@@ -16,7 +16,7 @@ export default class Admin extends Component {
                 <AdminMenu activeItem='admin' userInfo={userInfo} logout={logout}/>
                 <div className='admin-container'>
                     <Header as='h3'>Admin Panel</Header>
-                    <p>Todo: Figure out text to hihihihihiewfaowiejfwefput here</p>
+                    <p>Todo: Figure out text to put here</p>
                 </div>
             </div>
         );

@@ -11,6 +11,16 @@ export const getUserInfo = (accountInfo) => {
                 console.error(error);
             });
     }
+    if(accountInfo.accountType === 'professor'){
+        var uri = `${serverURL}/getProfessor/${accountInfo.personId}`;
+        return fetch(uri).then((response) => response.json())
+            .then((responseJson) => {
+                return responseJson;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
     if(accountInfo.accountType === 'admin'){
         return new Promise((resolve, reject) => {
             resolve({
@@ -18,7 +28,7 @@ export const getUserInfo = (accountInfo) => {
                 lastName: ''
             });
         });
-    }   
+    }
 }
 
 export const registerUser = (username, password, accountType, personId) => {
@@ -69,4 +79,15 @@ export const deleteAccount = (accountId) => {
         .catch((error) => {
             console.error(error);
         });   
+}
+
+export const getAllAccounts = () => {
+    var uri = `${serverURL}/getAllAccounts`;
+        return fetch(uri).then((response) => response.json())
+            .then((responseJson) => {
+                return responseJson;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
 }
