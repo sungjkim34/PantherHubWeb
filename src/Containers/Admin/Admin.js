@@ -16,7 +16,8 @@ export default class Admin extends Component {
                 <AdminMenu activeItem='admin' userInfo={userInfo} logout={logout}/>
                 <div className='admin-container'>
                     <Header as='h3'>Admin Panel</Header>
-                    <p>Todo: Figure out text to put here</p>
+                    <p>Welcome to the admin panel for the PantherHub management system.</p>
+                    <p>Here you have the ability to manage information at an administrator level.</p>
                 </div>
             </div>
         );

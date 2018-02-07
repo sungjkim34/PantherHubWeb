@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Dropdown, Form, Header, Icon, Image, Tab, Table } from 'semantic-ui-react';
-import { checkUsername, getAllAccounts } from '../../../Services/UserService';
+import { checkUsername } from '../../../Services/UserService';
 import moment from 'moment';
 import { DEPARTMENT_OPTIONS } from '../../../const';
 

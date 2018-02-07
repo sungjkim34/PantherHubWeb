@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { addStudent, deleteStudent, getAllStudents } from '../../Services/StudentService';
 import { addProfessor, deleteProfessor, getAllProfessors } from '../../Services/ProfessorService';
 import { addCourse, deleteCourse, getAllCourses } from '../../Services/CourseService';
+import { addClass, deleteClass, getAllClasses } from '../../Services/ClassService';
 import { checkUsername, getAllAccounts } from '../../Services/UserService';
 import './Admin.css';
 import AdminMenu from './AdminMenu';
@@ -13,7 +14,7 @@ import AccountTab from './Manage/AccountTab';
 import StudentTab from './Manage/StudentTab';
 import ProfessorTab from './Manage/ProfessorTab';
 import CourseTab from './Manage/CourseTab';
-// import ClassTab from './Manage/ClassTab';
+import ClassTab from './Manage/ClassTab';
 
 export default class AdminManage extends Component {
 
@@ -40,6 +41,9 @@ export default class AdminManage extends Component {
         });
         getAllAccounts().then(res => {
             this.setState({accounts: res});
+        });
+        getAllClasses().then(res => {
+            this.setState({classes: res});
         });
     }
 
@@ -126,6 +130,30 @@ export default class AdminManage extends Component {
         });
     }
 
+    addClass = (classInfo) => {
+        console.log(classInfo);
+        addClass(classInfo).then(res => {
+            // this.setState({
+            //     course: {...this.state.course, name: '', credits: '', subject: '', departmentId: undefined},
+            // });
+            console.log('--------- ADD CLASS RESULTS --------');
+            console.log(res);
+            this.setState({classes: [
+                ...this.state.classes,
+                {id: res.insertId, courseId: classInfo.courseId, professorId: classInfo.professorId, startTime: classInfo.startTime, endTime: classInfo.endTime, classDays: classInfo.classDays, maxStudents: classInfo.maxStudents, location: classInfo.location}
+                // {id: res.insertId, name: course.name, credits: course.credits, subject: course.subject, departmentId: course.departmentId}
+            ]});
+        });
+    }
+
+    deleteClass = (classId) => {
+        console.log(classId);
+        deleteClass(classId).then(res => {
+            this.setState({classes: this.state.classes.filter(classInfo => classInfo.id !== classId)});
+            console.log(res);
+        });
+    }
+
     renderPage() {
 
         const { logout, userInfo } = this.props;
@@ -135,7 +163,7 @@ export default class AdminManage extends Component {
             { menuItem: 'Student', render: () => <StudentTab students={this.state.students} addStudent={this.addStudent} deleteStudent={this.deleteStudent}/> },
             { menuItem: 'Professor', render: () => <ProfessorTab professors={this.state.professors} addProfessor={this.addProfessor} deleteProfessor={this.deleteProfessor}/> },
             { menuItem: 'Course', render: () => <CourseTab courses={this.state.courses} addCourse={this.addCourse} deleteCourse={this.deleteCourse}/> },
-            // { menuItem: 'Class', render: () => <ClassTab courses={this.state.classes} addClass={this.addClass} deleteClass={this.deleteClass}/> }
+            { menuItem: 'Class', render: () => <ClassTab classes={this.state.classes} addClass={this.addClass} deleteClass={this.deleteClass}/> }
         ];
 
         return (

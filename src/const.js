@@ -55,3 +55,34 @@ export const DEPARTMENT_OPTIONS = [
         value: '9'
     }
 ];
+
+export const DAYS_OF_WEEK = [
+    {
+        text: 'Monday',
+        value: 'monday'
+    },
+    {
+        text: 'Tuesday',
+        value: 'tuesday'
+    },
+    {
+        text: 'Wednesday',
+        value: 'wednesday'
+    },
+    {
+        text: 'Thursday',
+        value: 'thursday'
+    },
+    {
+        text: 'Friday',
+        value: 'friday'
+    },
+    {
+        text: 'Saturday',
+        value: 'saturday'
+    },
+    {
+        text: 'Sunday',
+        value: 'sunday'
+    }
+];

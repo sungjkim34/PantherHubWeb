@@ -10,7 +10,7 @@ export default class CourseTab extends Component {
         this.state = {
             course: {
                 name: '',
-                departmentId: undefined,
+                departmentId: '',
                 credits: '',
                 subject: ''
             }
@@ -20,7 +20,7 @@ export default class CourseTab extends Component {
     addCourse = () => {
         this.props.addCourse(this.state.course);
         this.setState({
-            course: {...this.state.course, name: '', credits: '', subject: '', departmentId: undefined},
+            course: {...this.state.course, name: '', credits: '', subject: '', departmentId: ''}
         });
     }
 

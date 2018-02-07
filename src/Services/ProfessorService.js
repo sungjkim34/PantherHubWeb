@@ -54,3 +54,12 @@ export const deleteProfessor = (professorId) => {
             console.error(error);
         });   
 }
+
+export const mapProfessors = () => {
+    return getAllProfessors().then(res => {
+        const result = res.map(professor => {
+            return {text: `${professor.firstName} ${professor.lastName}`, value: professor.id}
+        });
+        return result;
+    });
+}

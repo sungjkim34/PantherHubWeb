@@ -1,14 +1,17 @@
 import { serverURL } from '../env';
 
-export const addCourse = (courseInfo) => {
-    var uri = `${serverURL}/addCourse`;
+export const addClass = (classInfo) => {
+    var uri = `${serverURL}/addClass`;
     return fetch(uri, {
         method: 'POST',
         body: JSON.stringify({
-            name: courseInfo.name,
-            departmentId: courseInfo.departmentId,
-            credits: courseInfo.credits,
-            subject: courseInfo.subject
+            courseId: classInfo.courseId,
+            professorId: classInfo.professorId,
+            startTime: classInfo.startTime,
+            endTime: classInfo.endTime,
+            classDays: classInfo.classDays,
+            maxStudents: classInfo.maxStudents,
+            location: classInfo.location
         }), 
         headers: new Headers({
             'Content-Type': 'application/json'
@@ -23,8 +26,8 @@ export const addCourse = (courseInfo) => {
         });
 }
 
-export const getAllCourses = () => {
-    const uri = `${serverURL}/getAllCourses`
+export const getAllClasses = () => {
+    const uri = `${serverURL}/getAllClasses`
     return fetch(uri).then(response => response.json())
         .then(responseJson => {
             return responseJson;
@@ -34,12 +37,12 @@ export const getAllCourses = () => {
         });
 }
 
-export const deleteCourse = (courseId) => {
-    var uri = `${serverURL}/deleteCourse`;
+export const deleteClass = (classId) => {
+    var uri = `${serverURL}/deleteClass`;
     return fetch(uri, {
         method: 'POST',
         body: JSON.stringify({
-            courseId
+            classId
         }), 
         headers: new Headers({
             'Content-Type': 'application/json'
@@ -49,13 +52,4 @@ export const deleteCourse = (courseId) => {
         .catch((error) => {
             console.error(error);
         });   
-}
-
-export const mapCourses = () => {
-    return getAllCourses().then(res => {
-        const result = res.map(course => {
-            return {text: course.name, value: course.id}
-        });
-        return result;
-    });
 }
