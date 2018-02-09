@@ -34,8 +34,8 @@ export default class Home extends Component {
                                 <Header as='h2'>My Registration</Header>
                                 <strong>Spring Semester 2018</strong>
                                 <p>Eligible to Register</p>
-                                <Button primary fluid style={{marginBottom:'5px'}}>Add Classes</Button>
-                                <Button secondary fluid>Drop Classes</Button>
+                                <Button primary fluid style={{marginBottom:'5px'}} onClick={() => this.props.history.push('/enrollment')} >Add Classes</Button>
+                                <Button secondary fluid onClick={() => this.props.history.push('/enrollment/manage')}>Drop Classes</Button>
                                 <Divider />
                                 <Header as='h3'>Undergraduate Semester GPA</Header>
                                 <span><strong>Overall GPA:</strong></span><span style={{float:'right'}}>{this.state.overallGpa}</span>

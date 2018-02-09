@@ -16,7 +16,7 @@ export default class Login extends Component {
 
     componentWillMount() {
         if(this.props.isLoggedIn) {
-            this.props.history.push('/')
+            this.props.history.push('/');
         }
     }
 
@@ -28,7 +28,7 @@ export default class Login extends Component {
                     this.setState({error: 'Error - Invalid Credentials.'});
                 } else {
                     this.props.login(accountInfo);
-                    this.props.history.push('/')
+                    this.props.history.push('/');
                 }
             });
     }

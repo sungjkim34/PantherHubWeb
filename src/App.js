@@ -65,6 +65,13 @@ class App extends Component {
               isLoggedIn={isLoggedIn}
               login={(accountInfo) => this.login(accountInfo)}/>
           }/>
+          <Route exact path='/enrollment/manage' render={(props) =>
+            <Enrollment {...props}
+              isLoggedIn={isLoggedIn}
+              userInfo={userInfo}
+              accountInfo={accountInfo}
+              logout={() => this.logout()}/>
+          }/>
           <Route path='/enrollment' render={(props) =>
             <Enrollment {...props}
               isLoggedIn={isLoggedIn}

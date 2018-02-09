@@ -12,32 +12,40 @@ export const registerClass = (studentId, classId) => {
             'Content-Type': 'application/json'
         })
     }).then((response) => response.json())
-        .then((responseJson) => response.json())
-            .then(responseJson => {
-                return responseJson;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
-export const dropClass = (studentId, classId) => {
+export const dropClass = (enrollmentId) => {
     var uri = `${serverURL}/dropClass`;
     return fetch(uri, {
         method: 'POST',
         body: JSON.stringify({
-            studentId,
-            classId
+            enrollmentId
         }), 
         headers: new Headers({
             'Content-Type': 'application/json'
         })
     }).then((response) => response.json())
-        .then((responseJson) => response.json())
-            .then(responseJson => {
-                return responseJson;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+export const getStudentEnrollment = (studentId) => {
+    const uri = `${serverURL}/getStudentEnrollment/${studentId}`;
+    return fetch(uri).then(response => response.json())
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }

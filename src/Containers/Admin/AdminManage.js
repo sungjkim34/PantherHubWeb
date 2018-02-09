@@ -140,7 +140,7 @@ export default class AdminManage extends Component {
             console.log(res);
             this.setState({classes: [
                 ...this.state.classes,
-                {id: res.insertId, courseId: classInfo.courseId, professorId: classInfo.professorId, startTime: classInfo.startTime, endTime: classInfo.endTime, classDays: classInfo.classDays, maxStudents: classInfo.maxStudents, location: classInfo.location}
+                {id: res.insertId, courseId: classInfo.courseId, professorId: classInfo.professorId, startTime: classInfo.startTime, endTime: classInfo.endTime, classDays: JSON.stringify(classInfo.classDays), maxStudents: classInfo.maxStudents, location: classInfo.location}
                 // {id: res.insertId, name: course.name, credits: course.credits, subject: course.subject, departmentId: course.departmentId}
             ]});
         });
