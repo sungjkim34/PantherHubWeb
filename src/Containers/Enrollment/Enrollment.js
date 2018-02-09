@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, Header, Image, Loader, Tab } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import './Enrollment.css';
-import { getAllClassesDetailed } from '../../Services/ClassService';
+// import { getAllClassesDetailed } from '../../Services/ClassService';
 import MainMenu from '../MainMenu/MainMenu';
 import ClassTab from './ClassTab';
 import ManageTab from './ManageTab';
@@ -12,16 +12,16 @@ export default class Enrollment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            classes: [],
-            enrolledClasses: [],
+            // classes: [],
+            // enrolledClasses: [],
             currentTab: 0
         }
     }
 
     componentDidMount() {
-        getAllClassesDetailed().then(res => {
-            this.setState({classes: res});
-        });
+        // getAllClassesDetailed().then(res => {
+        //     this.setState({classes: res});
+        // });
         this.props.match.path === '/enrollment/manage' && this.setState({currentTab: 1});
     }
 
@@ -37,7 +37,7 @@ export default class Enrollment extends Component {
         const { accountInfo, logout, userInfo } = this.props;
 
         const panes = [
-            { menuItem: 'Add Class', render: () => <ClassTab userInfo={userInfo} classes={this.state.classes} enrollClass={this.enrollClass}/> },
+            { menuItem: 'Add Class', render: () => <ClassTab userInfo={userInfo} enrollClass={this.enrollClass}/> },
             { menuItem: 'Manage Class', render: () => <ManageTab userInfo={userInfo} /> }
         ];
 

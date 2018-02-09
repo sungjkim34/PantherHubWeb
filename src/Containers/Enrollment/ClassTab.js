@@ -7,6 +7,7 @@ import { mapCourses } from '../../Services/CourseService';
 import { formatDays } from '../../Utils/DateUtil';
 import { registerClass } from '../../Services/EnrollmentService';
 import { getStudentEnrollment } from '../../Services/EnrollmentService';
+import { getAllClassesDetailed } from '../../Services/ClassService';
 
 export default class ClassTab extends Component {
 
@@ -14,8 +15,15 @@ export default class ClassTab extends Component {
         super(props);
         this.state = {
             addedClasses: [],
-            enrolledClasses: []
+            enrolledClasses: [],
+            classes: []
         };
+    }
+
+    componentWillMount() {
+        getAllClassesDetailed().then(res => {
+            this.setState({classes: res});
+        });
     }
 
     componentDidMount() {
@@ -43,7 +51,10 @@ export default class ClassTab extends Component {
 
     registerClasses = () => {
         this.state.addedClasses.map(classInfo => {
-            registerClass(this.props.userInfo.id, classInfo.id).then(res => console.log(res));
+            registerClass(this.props.userInfo.id, classInfo.id).then(res => {
+                console.log(res);
+                this.setState({enrolledClasses: [...this.state.enrolledClasses, {classId: classInfo.id}]});
+            });
         });
         this.setState({addedClasses: []});
         // disable reregistering from class
@@ -125,7 +136,7 @@ export default class ClassTab extends Component {
                     </Table.Header>
                     <Table.Body>
                         {
-                            this.props.classes.map((classInfo, i) => {
+                            this.state.classes.map((classInfo, i) => {
                                 return (
                                     <Table.Row key={i}>
                                         <Table.Cell collapsing>

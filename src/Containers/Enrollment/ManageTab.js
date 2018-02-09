@@ -24,17 +24,17 @@ export default class ManageTab extends Component {
     }
 
     checkDropClass = (enrollmentId) => {
-        this.state.dropClassList.includes(enrollmentId) ? this.state.dropClassList.pop(enrollmentId) : this.state.dropClassList.push(enrollmentId);
+        this.state.dropClassList.includes(enrollmentId) ? this.setState({dropClassList: this.state.dropClassList.filter(classId => classId !== enrollmentId)}) : this.setState({dropClassList: [...this.state.dropClassList, enrollmentId]});
+        console.log(this.state.dropClassList);
     }
 
     dropClass = () => {
         this.state.dropClassList.map(dropEnrollmentId => {
             dropClass(dropEnrollmentId).then(res => {
-                console.log(res);
-                this.setState({enrolledClasses: this.state.enrolledClasses.filter(classInfo => classInfo.id !== dropEnrollmentId)});
+                // console.log(res);
+                this.setState({enrolledClasses: this.state.enrolledClasses.filter(classInfo => classInfo.id !== dropEnrollmentId), dropClassList: []});
             });
         });
-        this.setState({dropClassList: []});
     }
 
     resetDropList = () => {
@@ -69,7 +69,7 @@ export default class ManageTab extends Component {
                                                 return (
                                                     <Table.Row key={i}>
                                                         <Table.Cell collapsing>
-                                                            <Checkbox onClick={() => this.checkDropClass(classInfo.id)}/>
+                                                            <Checkbox checked={this.state.dropClassList.includes(classInfo.id)} onClick={() => this.checkDropClass(classInfo.id)}/>
                                                         </Table.Cell>
                                                         <Table.Cell>{classInfo.classId}</Table.Cell>
                                                         <Table.Cell>{classInfo.name}</Table.Cell>
