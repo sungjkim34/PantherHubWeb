@@ -13,9 +13,11 @@ export const authUser = (username, password) => {
         })
     }).then((response) => response.json())
         .then((responseJson) => {
-            if(!Array.isArray(responseJson)){
+            if(!Array.isArray(responseJson) && responseJson.sqlState !== '42000'){
                 sessionStorage.setItem('loggedInUser', JSON.stringify(responseJson));
                 sessionStorage.setItem('loggedInTime', Date.now());
+            } else if(responseJson.sqlState === '42000') {
+                return [];
             }
             return responseJson;
         })

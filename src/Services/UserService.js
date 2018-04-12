@@ -2,7 +2,7 @@ import { serverURL } from '../env';
 
 export const getUserInfo = (accountInfo) => {
     if(accountInfo.accountType === 'student'){
-        var uri = `${serverURL}/getStudent/${accountInfo.personId}`;
+        const uri = `${serverURL}/getStudent/${accountInfo.personId}`;
         return fetch(uri).then((response) => response.json())
             .then((responseJson) => {
                 return responseJson;
@@ -12,7 +12,7 @@ export const getUserInfo = (accountInfo) => {
             });
     }
     if(accountInfo.accountType === 'professor'){
-        var uri = `${serverURL}/getProfessor/${accountInfo.personId}`;
+        const uri = `${serverURL}/getProfessor/${accountInfo.personId}`;
         return fetch(uri).then((response) => response.json())
             .then((responseJson) => {
                 return responseJson;

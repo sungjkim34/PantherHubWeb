@@ -22,19 +22,20 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        getStudentEnrollment(this.props.accountInfo.personId).then(enrolledClasses => {
-            this.setState({ enrolledClasses });
-            if (enrolledClasses.length) {
-                let totalDue = 0;
-                enrolledClasses.forEach(enrolledClass => {
-                    totalDue += (enrolledClass.credits * COST_PER_CREDIT);
-                });
-                totalDue += COST_STUDENT_FEE;
-                this.setState({ totalDue });
-            } else {
-                this.setState({ totalDue: 0 });
-            }
-        });
+        this.props.accountInfo &&
+            getStudentEnrollment(this.props.accountInfo.personId).then(enrolledClasses => {
+                this.setState({ enrolledClasses });
+                if (enrolledClasses.length) {
+                    let totalDue = 0;
+                    enrolledClasses.forEach(enrolledClass => {
+                        totalDue += (enrolledClass.credits * COST_PER_CREDIT);
+                    });
+                    totalDue += COST_STUDENT_FEE;
+                    this.setState({ totalDue });
+                } else {
+                    this.setState({ totalDue: 0 });
+                }
+            });
     }
 
     renderPage() {

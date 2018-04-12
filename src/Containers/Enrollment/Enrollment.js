@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Header, Image, Loader, Tab } from 'semantic-ui-react';
+import { Loader, Tab } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import './Enrollment.css';
 import { getAllClassesDetailed } from '../../Services/ClassService';
@@ -34,7 +34,7 @@ export default class Enrollment extends Component {
     }
 
     renderPage() {
-        const { accountInfo, logout, userInfo } = this.props;
+        const { /*accountInfo,*/ logout, userInfo } = this.props;
 
         const panes = [
             { menuItem: 'Add Class', render: () => <ClassTab userInfo={userInfo} classes={this.state.classes} enrollClass={this.enrollClass}/> },

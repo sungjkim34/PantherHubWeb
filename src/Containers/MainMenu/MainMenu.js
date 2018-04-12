@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Dropdown, Icon, Image, Menu } from 'semantic-ui-react';
+import { Dropdown, Icon, Image, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './MainMenu.css';
 

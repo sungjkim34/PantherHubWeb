@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Comment, Form, Header, Image, Loader } from 'semantic-ui-react';
+import { Button, Comment, Form, Header, Loader } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import './Chat.css';
 import MainMenu from '../MainMenu/MainMenu';
@@ -32,7 +32,7 @@ export default class Chat extends Component {
 
     componentWillUnmount() {
         this.state.socket.disconnect();
-        this.state = {};
+        this.setState({});
     }
 
     sendMessage = () => {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Header, Icon, Image, Modal, Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { COST_STUDENT_FEE, COST_PER_CREDIT } from '../../const';
 
@@ -19,7 +19,7 @@ export default class Payment extends Component {
 
     render() {
 
-        const { accountInfo, userInfo, enrolledClasses, totalDue } = this.props;
+        const { /*accountInfo,*/ userInfo, enrolledClasses, totalDue } = this.props;
         console.log(enrolledClasses);
 
         return (
@@ -39,8 +39,8 @@ export default class Payment extends Component {
                         {/* <span><strong>Current Major: </strong></span><span style={{float:'right'}}>{userInfo.major}</span> */}
                         <p><strong>Enrolled Classes: </strong></p>
                         {
-                            enrolledClasses.map(enrolledClass => 
-                                <Segment>
+                            enrolledClasses.map((enrolledClass, i) => 
+                                <Segment key={i}>
                                     <p>
                                         <span><strong>{enrolledClass.name} ({enrolledClass.credits} credits)</strong></span>
                                         <span style={{float:'right'}}>{enrolledClass.location}</span>

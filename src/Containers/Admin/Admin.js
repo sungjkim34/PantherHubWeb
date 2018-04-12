@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import { Button, Card, Comment, Divider, Dropdown, Form, Grid, Header, Icon, Image, Loader, Segment } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
+import { Divider, Grid, Header, Loader, Segment } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
 import './Admin.css';
 import AdminMenu from './AdminMenu';
-import moment from 'moment';
+// import moment from 'moment';
 
 export default class Admin extends Component {
 
     renderPage() {
         
-        const { accountInfo, userInfo, logout } = this.props;
+        const { /*accountInfo, */userInfo, logout } = this.props;
 
         return (
             <div className='admin-page'>

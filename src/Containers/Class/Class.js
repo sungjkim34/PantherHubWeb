@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Header, Image, Loader } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import './Class.css';
 import MainMenu from '../MainMenu/MainMenu';
@@ -11,7 +11,7 @@ export default class Class extends Component {
     // }
 
     renderPage() {
-        const { accountInfo, logout, userInfo } = this.props;
+        const { /*accountInfo,*/ logout, userInfo } = this.props;
 
         return (
             <div className='class-page'>

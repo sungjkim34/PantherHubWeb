@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Button, Divider, Dropdown, Form, Header, Icon, Image, Loader, Tab, Table, Segment } from 'semantic-ui-react';
+import { Button, Header, Icon, Tab, Table } from 'semantic-ui-react';
 import moment from 'moment';
-import { DAYS_OF_WEEK } from '../../const';
-import { mapProfessors } from '../../Services/ProfessorService';
-import { mapCourses } from '../../Services/CourseService';
+// import { DAYS_OF_WEEK } from '../../const';
+// import { mapProfessors } from '../../Services/ProfessorService';
+// import { mapCourses } from '../../Services/CourseService';
 import { formatDays } from '../../Utils/DateUtil';
 import { registerClass } from '../../Services/EnrollmentService';
 import { getStudentEnrollment } from '../../Services/EnrollmentService';
@@ -52,7 +52,7 @@ export default class ClassTab extends Component {
     // }
 
     registerClasses = () => {
-        this.state.addedClasses.map(classInfo => {
+        this.state.addedClasses.forEach(classInfo => {
             registerClass(this.props.userInfo.id, classInfo.id).then(res => {
                 console.log(res);
                 this.setState({enrolledClasses: [...this.state.enrolledClasses, {classId: classInfo.id}]});

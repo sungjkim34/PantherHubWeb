@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Dropdown, Form, Header, Icon, Image, Tab, Table } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Tab, Table } from 'semantic-ui-react';
 import { checkUsername } from '../../../Services/UserService';
 import moment from 'moment';
 import { MAJOR_OPTIONS } from '../../../const';

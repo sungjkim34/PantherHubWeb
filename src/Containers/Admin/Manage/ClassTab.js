@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Dropdown, Form, Header, Icon, Image, Loader, Tab, Table } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Tab, Table } from 'semantic-ui-react';
 import moment from 'moment';
 import { DAYS_OF_WEEK } from '../../../const';
 import { mapProfessors } from '../../../Services/ProfessorService';

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Button, Dropdown, Form, Header, Icon, Image, Tab, Table } from 'semantic-ui-react';
-import moment from 'moment';
-import { MAJOR_OPTIONS, DEPARTMENT_OPTIONS } from '../../../const';
+import { Button, Form, Header, Icon, Tab, Table } from 'semantic-ui-react';
+// import moment from 'moment';
+import { /*MAJOR_OPTIONS,*/ DEPARTMENT_OPTIONS } from '../../../const';
 
 export default class CourseTab extends Component {
 

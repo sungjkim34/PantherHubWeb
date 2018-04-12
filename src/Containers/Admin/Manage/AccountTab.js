@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import { Button, Header, Icon, Tab, Table } from 'semantic-ui-react';
-import { Redirect, Link } from 'react-router-dom';
+import React/*, { Component }*/ from 'react';
+import { Header, Tab, Table } from 'semantic-ui-react';
+// import { Redirect, Link } from 'react-router-dom';
 
 const AccountTab = ({accounts}) => 
     <Tab.Pane>

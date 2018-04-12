@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import { Button, Checkbox, Divider, Dropdown, Form, Header, Icon, Image, Loader, Tab, Table, Segment } from 'semantic-ui-react';
+import { Button, Checkbox, Header, Icon, Tab, Table } from 'semantic-ui-react';
 import moment from 'moment';
-import { DAYS_OF_WEEK } from '../../const';
-import { mapProfessors } from '../../Services/ProfessorService';
-import { mapCourses } from '../../Services/CourseService';
+// import { DAYS_OF_WEEK } from '../../const';
+// import { mapProfessors } from '../../Services/ProfessorService';
+// import { mapCourses } from '../../Services/CourseService';
 import { formatDays } from '../../Utils/DateUtil';
 import { getStudentEnrollment, dropClass } from '../../Services/EnrollmentService';
 
@@ -29,7 +29,7 @@ export default class ManageTab extends Component {
     }
 
     dropClass = () => {
-        this.state.dropClassList.map(dropEnrollmentId => {
+        this.state.dropClassList.forEach(dropEnrollmentId => {
             dropClass(dropEnrollmentId).then(res => {
                 // console.log(res);
                 this.setState({enrolledClasses: this.state.enrolledClasses.filter(classInfo => classInfo.id !== dropEnrollmentId), dropClassList: []});

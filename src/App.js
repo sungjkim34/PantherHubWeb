@@ -35,6 +35,7 @@ class App extends Component {
   }
 
   login = (accountInfo) => {
+    console.log(accountInfo);
     this.setState({accountInfo: accountInfo, isLoggedIn: true});
     getUserInfo(accountInfo).then(userInfo => {
         this.setState({userInfo: userInfo});

@@ -13,7 +13,7 @@ export const formatDays = (days) => {
         var day2 = b.toLowerCase();
         return sorter[day1] > sorter[day2];
       })
-    formattedDays.map((day, i) => {
+    formattedDays.forEach((day, i) => {
         switch(day) {
             case 'monday':
                 formattedDays[i] = 'M';
@@ -37,5 +37,5 @@ export const formatDays = (days) => {
                 break;
         }
     });
-    return JSON.stringify(formattedDays).replace(/[",\[\]]/g,'');
+    return JSON.stringify(formattedDays).replace(/[",[\]]/g,'');
 }
