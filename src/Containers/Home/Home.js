@@ -5,6 +5,7 @@ import Evaluation from '../Modals/Evaluation';
 import Payment from '../Modals/Payment';
 import MainMenu from '../MainMenu/MainMenu';
 import { getStudentEnrollment } from '../../Services/EnrollmentService';
+import { getTotalStudentTransaction } from '../../Services/TransactionService';
 import { COST_STUDENT_FEE, COST_PER_CREDIT } from '../../const';
 import './Home.css';
 
@@ -17,12 +18,13 @@ export default class Home extends Component {
             totalDue: 0,
             degree: 'Bachelor of Science',
             tuitionType: 'In State',
-            enrolledClasses: []
+            enrolledClasses: [],
+            totalPaid: 0
         };
     }
 
     componentDidMount() {
-        this.props.accountInfo &&
+        if(this.props.accountInfo) {
             getStudentEnrollment(this.props.accountInfo.personId).then(enrolledClasses => {
                 this.setState({ enrolledClasses });
                 if (enrolledClasses.length) {
@@ -32,10 +34,17 @@ export default class Home extends Component {
                     });
                     totalDue += COST_STUDENT_FEE;
                     this.setState({ totalDue });
+                    getTotalStudentTransaction(this.props.accountInfo.personId).then(transactions => {
+                        const { totalPaid } = transactions;
+                        console.log(totalPaid);
+                        this.setState({ totalPaid: totalPaid })
+                        this.setState({ totalDue: this.state.totalDue - totalPaid });
+                    })
                 } else {
                     this.setState({ totalDue: 0 });
                 }
             });
+        }
     }
 
     renderPage() {
@@ -71,7 +80,7 @@ export default class Home extends Component {
                         <Grid.Column>
                             <Segment>
                                 <Header as='h3'>My Bill</Header>
-                                <span><strong>Total Due:</strong></span><span style={{float:'right'}}>${this.state.totalDue}.00</span>
+                                <span><strong>Total Due:</strong></span><span style={{float:'right'}}>${parseFloat(Math.round(this.state.totalDue * 100) / 100).toFixed(2)}</span>
                                 {/* <Button style={{marginTop:'10px'}} onClick={() => {}} content='Pay Account' fluid primary/> */}
                                 <p><Payment enrolledClasses={this.state.enrolledClasses} totalDue={this.state.totalDue} userInfo={userInfo} accountInfo={accountInfo}/></p>
                                 <Divider />

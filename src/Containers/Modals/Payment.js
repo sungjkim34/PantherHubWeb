@@ -52,9 +52,9 @@ export default class Payment extends Component {
                                 </Segment>
                             )
                         }
-                        <p><span>Student Fees:</span><span style={{float:'right'}}>${COST_STUDENT_FEE}.00</span></p>
-                        <p><span>Class Fees:</span><span style={{float:'right'}}>${COST_PER_CREDIT}.00 x {enrolledClasses.reduce((a, b) => +a + +b.credits, 0)} credits</span></p>
-                        <span><strong>Total Due: </strong></span><span style={{float:'right'}}>${totalDue}.00</span>
+                        <p><span>Student Fees:</span><span style={{float:'right'}}>${parseFloat(Math.round(COST_STUDENT_FEE * 100) / 100).toFixed(2)}</span></p>
+                        <p><span>Class Fees:</span><span style={{float:'right'}}>${parseFloat(Math.round(COST_PER_CREDIT * 100) / 100).toFixed(2)} x {enrolledClasses.reduce((a, b) => +a + +b.credits, 0)} credits</span></p>
+                        <span><strong>Total Due: </strong></span><span style={{float:'right'}}>${parseFloat(Math.round(totalDue * 100) / 100).toFixed(2)}</span>
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
