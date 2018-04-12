@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import { Button, Card, Divider, Grid, Header, List, Loader, Radio, Segment } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
-import Evaluation from '../Evaluation/Evaluation';
+import Evaluation from '../Modals/Evaluation';
+import Payment from '../Modals/Payment';
 import MainMenu from '../MainMenu/MainMenu';
+import { getStudentEnrollment } from '../../Services/EnrollmentService';
+import { COST_STUDENT_FEE, COST_PER_CREDIT } from '../../const';
 import './Home.css';
 
 export default class Home extends Component {
@@ -11,10 +14,27 @@ export default class Home extends Component {
         super(props);
         this.state = {
             overallGpa: 3.52,
-            totalDue: '$2401.61',
+            totalDue: 0,
             degree: 'Bachelor of Science',
-            tuitionType: 'In State'
+            tuitionType: 'In State',
+            enrolledClasses: []
         };
+    }
+
+    componentDidMount() {
+        getStudentEnrollment(this.props.accountInfo.personId).then(enrolledClasses => {
+            this.setState({ enrolledClasses });
+            if (enrolledClasses.length) {
+                let totalDue = 0;
+                enrolledClasses.forEach(enrolledClass => {
+                    totalDue += (enrolledClass.credits * COST_PER_CREDIT);
+                });
+                totalDue += COST_STUDENT_FEE;
+                this.setState({ totalDue });
+            } else {
+                this.setState({ totalDue: 0 });
+            }
+        });
     }
 
     renderPage() {
@@ -50,8 +70,9 @@ export default class Home extends Component {
                         <Grid.Column>
                             <Segment>
                                 <Header as='h3'>My Bill</Header>
-                                <span><strong>Total Due:</strong></span><span style={{float:'right'}}>{this.state.totalDue}</span>
-                                <Button style={{marginTop:'10px'}} onClick={() => {}} content='Pay Account' fluid primary/>
+                                <span><strong>Total Due:</strong></span><span style={{float:'right'}}>${this.state.totalDue}.00</span>
+                                {/* <Button style={{marginTop:'10px'}} onClick={() => {}} content='Pay Account' fluid primary/> */}
+                                <p><Payment enrolledClasses={this.state.enrolledClasses} totalDue={this.state.totalDue} userInfo={userInfo} accountInfo={accountInfo}/></p>
                                 <Divider />
                                 <span><strong>Tuition Classification:</strong></span><span style={{float:'right'}}>{this.state.tuitionType}</span>
                                 <Divider />
@@ -70,8 +91,8 @@ export default class Home extends Component {
                                 <List bulleted>
                                     <List.Item><strong><u>Home:</u></strong> Review and complete financial aid, make payments, access financial information.</List.Item>
                                     <List.Item><strong><u>Enrollment:</u></strong> For registration and record transactions and information.</List.Item>
-                                    <List.Item><strong><u>Class:</u></strong> Classes blah blah blah</List.Item>
-                                    <List.Item><strong><u>Chat:</u></strong> Chat blah blah blah</List.Item>
+                                    <List.Item><strong><u>Class:</u></strong> View currently registered classes and course information.</List.Item>
+                                    <List.Item><strong><u>Chat:</u></strong> Communicate with your classmates and professors</List.Item>
                                 </List>
                             </Segment>
                         </Grid.Column>

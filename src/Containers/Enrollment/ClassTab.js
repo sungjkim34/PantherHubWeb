@@ -7,7 +7,6 @@ import { mapCourses } from '../../Services/CourseService';
 import { formatDays } from '../../Utils/DateUtil';
 import { registerClass } from '../../Services/EnrollmentService';
 import { getStudentEnrollment } from '../../Services/EnrollmentService';
-import { getAllClassesDetailed } from '../../Services/ClassService';
 
 export default class ClassTab extends Component {
 
@@ -15,19 +14,13 @@ export default class ClassTab extends Component {
         super(props);
         this.state = {
             addedClasses: [],
-            enrolledClasses: [],
-            classes: []
+            enrolledClasses: []
         };
-    }
-
-    componentWillMount() {
-        getAllClassesDetailed().then(res => {
-            this.setState({classes: res});
-        });
     }
 
     componentDidMount() {
         getStudentEnrollment(this.props.userInfo.id).then(res => {
+            // This.setState is causing error. May need to move this api call up to enrollment component
             this.setState({enrolledClasses: res});
         });
     }
@@ -48,6 +41,15 @@ export default class ClassTab extends Component {
     isClassRegistered = (classId) => {
         return this.state.enrolledClasses.filter(enrolledClass => enrolledClass.classId === classId).length === 0;
     }
+
+    // registerClasses = () => {
+    //     this.state.addedClasses.map(classInfo => {
+    //         registerClass(this.props.userInfo.id, classInfo.id).then(res => console.log(res));
+    //     });
+    //     this.setState({addedClasses: []});
+    //     // disable reregistering from class
+    //     // Maybe call getAllClassesDetailed from this file and pop out the class when added.
+    // }
 
     registerClasses = () => {
         this.state.addedClasses.map(classInfo => {
@@ -136,7 +138,7 @@ export default class ClassTab extends Component {
                     </Table.Header>
                     <Table.Body>
                         {
-                            this.state.classes.map((classInfo, i) => {
+                            this.props.classes.map((classInfo, i) => {
                                 return (
                                     <Table.Row key={i}>
                                         <Table.Cell collapsing>

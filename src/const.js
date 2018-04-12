@@ -86,3 +86,6 @@ export const DAYS_OF_WEEK = [
         value: 'sunday'
     }
 ];
+
+export const COST_STUDENT_FEE = 312;
+export const COST_PER_CREDIT = 291;
