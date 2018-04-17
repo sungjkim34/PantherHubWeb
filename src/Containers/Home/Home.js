@@ -57,11 +57,13 @@ export default class Home extends Component {
     }
 
     renderPage() {
+
         const { accountInfo, logout, userInfo } = this.props;
+        const { enrolledClasses } = this.state;
 
         return (
             <div className='home-page'>
-                {/* <ContactInfo ref='contactInfoModal'/> */}
+                <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo}/>
                 <MainMenu activeItem='home' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout} toggleContactInfo={() => this.toggleContactInfo()}/>
                 <div className='home-container'>
                     {accountInfo.accountType === 'admin' && <p>I see you are logged in as admin. TODO: Route to admin page.</p>}
@@ -81,7 +83,7 @@ export default class Home extends Component {
                                 <span><strong>Overall GPA:</strong></span><span style={{float:'right'}}>{this.state.overallGpa}</span>
                                 <Divider />
                                 <Header as='h3' style={{marginBottom:'0px'}}>Degree(s) and Major OR Pathway</Header>
-                                <p><Evaluation degreeaccountInfo={accountInfo} userInfo={userInfo}/></p>
+                                <p><Evaluation enrolledClasses={enrolledClasses} degreeaccountInfo={accountInfo} userInfo={userInfo}/></p>
                                 <span><strong>Degree:</strong></span><span style={{float:'right'}}>{this.state.degree}</span>
                                 <p/>
                                 <span><strong>Major:</strong></span><span style={{float:'right'}}>{this.props.userInfo.major}</span>

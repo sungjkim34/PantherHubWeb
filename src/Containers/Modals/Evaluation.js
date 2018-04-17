@@ -17,7 +17,7 @@ export default class Evaluation extends Component {
 
     render() {
 
-        const { /*accountInfo,*/ userInfo } = this.props;
+        const { /*accountInfo,*/ userInfo, enrolledClasses } = this.props;
 
         return (
             <Modal
@@ -35,6 +35,26 @@ export default class Evaluation extends Component {
                     <Modal.Description>
                         <Header>{userInfo.firstName} {userInfo.lastName}</Header>
                         <span><strong>Current Major: </strong></span><span style={{float:'right'}}>{userInfo.major}</span>
+                        {/* <table>
+                            <thead>
+                                <tr>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                </tr>
+                            </tbody>
+                        </table> */}
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
