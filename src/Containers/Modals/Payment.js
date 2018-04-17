@@ -4,6 +4,8 @@ import { Button, Header, Form, Label, Icon, Image, Input, Modal, Segment, Step }
 import moment from 'moment';
 import { COST_STUDENT_FEE, COST_PER_CREDIT } from '../../const';
 
+import { addTransaction } from '../../Services/TransactionService';
+
 const PaymentStep = ({ stepNumber }) => {
     return (
         <Step.Group size='tiny'>
@@ -71,11 +73,15 @@ export default class Payment extends Component {
             this.setState({ stepNumber: this.state.stepNumber + 1 });
         }
     }
+
+    confirmPayment = () => {
+        this.setState({ stepNumber: 1, open: !this.state.open });
+        this.clearBillingInfo();
+    }
     
     checkIfBillingInfoValid = () => {
         const { firstName, lastName, street, street2, city, state, zipCode, email } = this.state;
-        // return(!!(firstName.length && lastName.length && street.length && city.length && state.length && zipCode.length && email.length));r
-        return true;
+        return(!!(firstName.length && lastName.length && street.length && city.length && state.length && zipCode.length && email.length));
     }
 
     enterAmountToPay = (amountToPay) => {
@@ -210,7 +216,7 @@ export default class Payment extends Component {
                     }
                     {
                         stepNumber === 3 &&
-                        <Button primary onClick={() => this.triggerModal()} disabled={!this.checkIfAmountIsValid()}>Finish <Icon name='chevron right' style={{ marginLeft: 5 }} /></Button>
+                        <Button primary onClick={() => this.confirmPayment()} disabled={!this.checkIfAmountIsValid()}>Finish <Icon name='chevron right' style={{ marginLeft: 5 }} /></Button>
                     }
                 </Modal.Actions>
             </Modal>
