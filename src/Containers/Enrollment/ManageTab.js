@@ -48,7 +48,7 @@ export default class ManageTab extends Component {
         return (
             <Tab.Pane active>
                     {
-                        enrolledClasses.length !== 0 &&
+                        enrolledClasses.length !== 0 ?
                             <div>
                                 <Header as='h3'>Added Classes</Header>
                                 <Table celled selectable>
@@ -95,6 +95,10 @@ export default class ManageTab extends Component {
                                         </Table.Row>
                                     </Table.Footer>
                                 </Table>
+                            </div> :
+                            <div style={{textAlign: 'center', margin: '50px'}}>
+                                <p>No enrolled classes.</p>
+                                <p>Please use the Add Class tab to enroll in classes.</p>
                             </div>
                     }
             </Tab.Pane>

@@ -26,7 +26,7 @@ export default class MainMenu extends Component {
 
     render() {
 
-        const { activeItem, firstName, lastName, logout } = this.props;
+        const { activeItem, firstName, lastName, logout, toggleContactInfo } = this.props;
 
         const options = [
             {
@@ -34,7 +34,7 @@ export default class MainMenu extends Component {
               text: <span>Signed in as <strong>{firstName} {lastName}</strong></span>,
               disabled: true,
             },
-            { key: 'profile', text: 'Your Profile', onClick: () => console.log('profile clicked') },
+            { key: 'profile', text: 'Your Profile', onClick: () => toggleContactInfo() },
             { key: 'sign-out', text: 'Sign Out', onClick: () => logout() },
         ];
 

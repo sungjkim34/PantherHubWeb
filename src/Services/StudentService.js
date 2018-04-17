@@ -55,3 +55,31 @@ export const deleteStudent = (studentId) => {
             console.error(error);
         });   
 }
+
+export const getContactInfo = (studentId) => {
+    const uri = `${serverURL}/getContactInfo/${studentId}`
+    return fetch(uri).then(response => response.json())
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+export const updateContactInfo = (contactInfo) => {
+    var uri = `${serverURL}/updateContactInfo`;
+    return fetch(uri, {
+        method: 'POST',
+        body: JSON.stringify({
+            contactInfo
+        }), 
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then((response) => response.json())
+        .then((responseJson) => console.log(responseJson))
+        .catch((error) => {
+            console.error(error);
+        });   
+}

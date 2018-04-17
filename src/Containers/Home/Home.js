@@ -3,6 +3,7 @@ import { Button, Card, Divider, Grid, Header, List, Loader, Radio, Segment } fro
 import { Redirect } from 'react-router-dom';
 import Evaluation from '../Modals/Evaluation';
 import Payment from '../Modals/Payment';
+import ContactInfo from '../Modals/ContactInfo';
 import MainMenu from '../MainMenu/MainMenu';
 import { getStudentEnrollment } from '../../Services/EnrollmentService';
 import { getTotalStudentTransaction } from '../../Services/TransactionService';
@@ -47,12 +48,17 @@ export default class Home extends Component {
         }
     }
 
+    toggleContactInfo = () => {
+        this.refs.contactInfoModal.triggerModal();
+    }
+
     renderPage() {
         const { accountInfo, logout, userInfo } = this.props;
 
         return (
             <div className='home-page'>
-                <MainMenu activeItem='home' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
+                {/* <ContactInfo ref='contactInfoModal'/> */}
+                <MainMenu activeItem='home' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout} toggleContactInfo={() => this.toggleContactInfo()}/>
                 <div className='home-container'>
                     {accountInfo.accountType === 'admin' && <p>I see you are logged in as admin. TODO: Route to admin page.</p>}
                     <Header as='h2'>PantherHub - Home</Header>
