@@ -1,12 +1,11 @@
 import { serverURL } from '../env';
 
-export const addTransaction = (transaction) => {
+export const addTransaction = (studentId, amountPaid) => {
     var uri = `${serverURL}/addTransaction`;
     return fetch(uri, {
         method: 'POST',
         body: JSON.stringify({
-            studentId: transaction.studentId,
-            amountPaid: transaction.amountPaid
+            studentId, amountPaid
         }), 
         headers: new Headers({
             'Content-Type': 'application/json'

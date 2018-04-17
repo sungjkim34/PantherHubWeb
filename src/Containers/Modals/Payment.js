@@ -75,8 +75,12 @@ export default class Payment extends Component {
     }
 
     confirmPayment = () => {
-        this.setState({ stepNumber: 1, open: !this.state.open });
-        this.clearBillingInfo();
+        const { amountToPay } = this.state;
+        addTransaction(this.props.userInfo.id, amountToPay).then(res => {
+            this.setState({ stepNumber: 1, open: !this.state.open, amountToPay: 0 });
+            this.props.payTuition(amountToPay);
+            this.clearBillingInfo();
+        });
     }
     
     checkIfBillingInfoValid = () => {
@@ -90,12 +94,13 @@ export default class Payment extends Component {
 
     checkIfAmountIsValid = () => {
 
-        const { amountToPay, totalDue } = this.state;
+        const { amountToPay } = this.state;
         
         const isNan = isNaN(parseFloat(Math.round(amountToPay * 100) / 100).toFixed(2));
-        const amountIsLessThanTotalDue = parseFloat(Math.round(amountToPay * 100) / 100).toFixed(2) <= parseFloat(Math.round(this.props.totalDue * 100) / 100).toFixed(2);
+        const amountIsLessThanTotalDue = parseFloat(Math.round(amountToPay * 100) / 100) <= parseFloat(Math.round(this.props.totalDue * 100) / 100);
+        const amountToPayIsGreaterThanZero = parseFloat(Math.round(amountToPay * 100) / 100) > 0;
 
-        return(!isNan && amountIsLessThanTotalDue);
+        return(!isNan && amountIsLessThanTotalDue && amountToPayIsGreaterThanZero);
     }
 
     __returnModalDescription = () => {

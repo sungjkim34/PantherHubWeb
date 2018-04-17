@@ -48,6 +48,10 @@ export default class Home extends Component {
         }
     }
 
+    payTuition = (payAmount) => {
+        this.setState({totalDue: this.state.totalDue - payAmount});
+    }
+
     toggleContactInfo = () => {
         this.refs.contactInfoModal.triggerModal();
     }
@@ -88,7 +92,7 @@ export default class Home extends Component {
                                 <Header as='h3'>My Bill</Header>
                                 <span><strong>Total Due:</strong></span><span style={{float:'right'}}>${parseFloat(Math.round(this.state.totalDue * 100) / 100).toFixed(2)}</span>
                                 {/* <Button style={{marginTop:'10px'}} onClick={() => {}} content='Pay Account' fluid primary/> */}
-                                <p><Payment enrolledClasses={this.state.enrolledClasses} totalDue={this.state.totalDue} userInfo={userInfo} accountInfo={accountInfo}/></p>
+                                <p><Payment enrolledClasses={this.state.enrolledClasses} totalDue={this.state.totalDue} userInfo={userInfo} accountInfo={accountInfo} payTuition={(payAmount) => this.payTuition(payAmount)}/></p>
                                 <Divider />
                                 <span><strong>Tuition Classification:</strong></span><span style={{float:'right'}}>{this.state.tuitionType}</span>
                                 <Divider />
