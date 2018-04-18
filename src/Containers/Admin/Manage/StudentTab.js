@@ -98,7 +98,7 @@ export default class StudentTab extends Component {
                                         <Table.Cell>{student.major}</Table.Cell>
                                         <Table.Cell>{moment(student.startDate).format('MM-DD-YYYY')}</Table.Cell>
                                         <Table.Cell collapsing>
-                                            <Icon link size='large' color='blue' name='edit' />
+                                            {/* <Icon link size='large' color='blue' name='edit' /> */}
                                             <Icon link size='large' color='red' name='delete' onClick={() => this.props.deleteStudent(student.id)} />
                                         </Table.Cell>
                                     </Table.Row>

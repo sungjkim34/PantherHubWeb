@@ -67,7 +67,7 @@ export default class CourseTab extends Component {
                                         <Table.Cell>{course.credits}</Table.Cell>
                                         <Table.Cell>{course.subject}</Table.Cell>
                                         <Table.Cell collapsing>
-                                            <Icon link size='large' color='blue' name='edit' />
+                                            {/* <Icon link size='large' color='blue' name='edit' /> */}
                                             <Icon link size='large' color='red' name='delete' onClick={() => this.props.deleteCourse(course.id)} />
                                         </Table.Cell>
                                     </Table.Row>

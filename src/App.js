@@ -8,6 +8,7 @@ import Login from './Containers/Login/Login';
 import Enrollment from './Containers/Enrollment/Enrollment';
 import NotFound from './Containers/NotFound/NotFound';
 import AdminManage from './Containers/Admin/AdminManage';
+import ProfessorHome from './Containers/Professor/ProfessorHome';
 import { logOutUser } from './Services/AuthService';
 import { getUserInfo } from './Services/UserService';
 import { Switch, Route } from 'react-router-dom';
@@ -89,6 +90,13 @@ class App extends Component {
           }/>
           <Route path='/chat' render={(props) =>
             <Chat {...props}
+              isLoggedIn={isLoggedIn}
+              userInfo={userInfo}
+              accountInfo={accountInfo}
+              logout={() => this.logout()}/>
+          }/>
+          <Route path='/professorhome' render={(props) =>
+            <ProfessorHome {...props}
               isLoggedIn={isLoggedIn}
               userInfo={userInfo}
               accountInfo={accountInfo}

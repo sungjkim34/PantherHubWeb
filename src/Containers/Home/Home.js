@@ -137,7 +137,7 @@ export default class Home extends Component {
 
         if (userInfo) {
             if(accountInfo.accountType === 'student') return this.renderPage();
-            else if (accountInfo.accountType === 'professor') return this.renderPage();
+            else if (accountInfo.accountType === 'professor') return <Redirect to='/professorhome' />;
             else if (accountInfo.accountType === 'admin') return <Redirect to='/admin' />;
             else return <Redirect to='/login' />
         } else if (isLoggedIn){

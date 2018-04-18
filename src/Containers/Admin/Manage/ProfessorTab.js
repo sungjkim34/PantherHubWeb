@@ -93,7 +93,7 @@ export default class ProfessorTab extends Component {
                                         <Table.Cell>{moment(professor.dob).format('MM-DD-YYYY')}</Table.Cell>
                                         <Table.Cell>{professor.departmentId}</Table.Cell>
                                         <Table.Cell collapsing>
-                                            <Icon link size='large' color='blue' name='edit' />
+                                            {/* <Icon link size='large' color='blue' name='edit' /> */}
                                             <Icon link size='large' color='red' name='delete' onClick={() => this.props.deleteProfessor(professor.id)} />
                                         </Table.Cell>
                                     </Table.Row>

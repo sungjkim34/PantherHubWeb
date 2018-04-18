@@ -103,7 +103,7 @@ export default class ClassTab extends Component {
                                         <Table.Cell>{classInfo.professorId}</Table.Cell>
                                         <Table.Cell>{classInfo.location}</Table.Cell>
                                         <Table.Cell collapsing>
-                                            <Icon link size='large' color='blue' name='edit' />
+                                            {/* <Icon link size='large' color='blue' name='edit' /> */}
                                             <Icon link size='large' color='red' name='delete' onClick={() => this.props.deleteClass(classInfo.id)} />
                                         </Table.Cell>
                                     </Table.Row>
