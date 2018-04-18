@@ -70,14 +70,11 @@ export default class Chat extends Component {
     }
 
     renderPage() {
-        const { accountInfo, logout, userInfo } = this.props;
+        const { accountInfo } = this.props;
 
         return (
             <div className='chat-page'>
                 {
-                    // accountInfo.accountType === 'student' ?
-                    //     <MainMenu activeItem='chat' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout} /> :
-                    //     <AdminMenu activeItem='chat' userInfo={userInfo} logout={logout} />
                     this.renderMenu()
                 }
                 <div className='chat-container'>
@@ -102,7 +99,7 @@ export default class Chat extends Component {
                                             </Comment.Metadata>
                                             <Comment.Text>{message.messageText}</Comment.Text>
                                             {
-                                                (accountInfo.personId === message.authorId || accountInfo.accountType === 'admin') &&
+                                                (accountInfo.personId === message.authorId || accountInfo.accountType === 'admin' || (accountInfo.accountType==='professor' && message.authorType === 'student')) &&
                                                 <Comment.Actions>
                                                     <a onClick={() => this.deleteMessage(message.id)}>Delete</a>
                                                 </Comment.Actions>

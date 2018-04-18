@@ -37,7 +37,6 @@ export default class Home extends Component {
                     this.setState({ totalDue });
                     getTotalStudentTransaction(this.props.accountInfo.personId).then(transactions => {
                         const { totalPaid } = transactions;
-                        console.log(totalPaid);
                         this.setState({ totalPaid: totalPaid })
                         this.setState({ totalDue: this.state.totalDue - totalPaid });
                     })

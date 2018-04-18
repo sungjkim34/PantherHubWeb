@@ -84,7 +84,7 @@ export default class Payment extends Component {
     }
     
     checkIfBillingInfoValid = () => {
-        const { firstName, lastName, street, street2, city, state, zipCode, email } = this.state;
+        const { firstName, lastName, street, city, state, zipCode, email } = this.state;
         return(!!(firstName.length && lastName.length && street.length && city.length && state.length && zipCode.length && email.length));
     }
 
@@ -186,12 +186,17 @@ export default class Payment extends Component {
                         <PaymentStep stepNumber={stepNumber} />
                     </Modal.Description>
                 );
+            default:
+                return(
+                    <Modal.Description style={{ width: '100%' }}>
+                    </Modal.Description>
+                );
         }
     }
 
     render() {
 
-        const { /*accountInfo,*/ userInfo, enrolledClasses, totalDue } = this.props;
+        const { /*accountInfo, userInfo, enrolledClasses,*/ totalDue } = this.props;
         const { stepNumber } = this.state;
         // console.log(enrolledClasses);
 

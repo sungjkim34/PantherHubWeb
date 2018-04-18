@@ -17,7 +17,7 @@ export default class Evaluation extends Component {
 
     render() {
 
-        const { /*accountInfo,*/ userInfo, enrolledClasses } = this.props;
+        const { /*accountInfo,*/ userInfo, /*enrolledClasses*/ } = this.props;
 
         return (
             <Modal

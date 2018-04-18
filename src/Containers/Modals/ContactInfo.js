@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Header, Icon, Image, Modal } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { getContactInfo } from '../../Services/StudentService';
@@ -27,9 +27,8 @@ export default class ContactInfo extends Component {
 
     render() {
 
-        const { accountInfo, userInfo } = this.props;
+        const { userInfo } = this.props;
         const { contactInfo } = this.state;
-        console.log(contactInfo);
 
         return (
             <Modal
