@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Divider, Grid, Header, Loader, Segment } from 'semantic-ui-react';
+import { Button, Card, Divider, Header, Loader, Segment } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import ContactInfo from '../Modals/ContactInfo';
 import ProfessorMenu from './ProfessorMenu';
@@ -43,7 +43,7 @@ export default class ProfessorClass extends Component {
     dropStudent = (enrollmentId) => {
         dropClass(enrollmentId).then(res => {
             const tempClassesTaught = [...this.state.classesTaught];
-            tempClassesTaught.map(classTaught => {
+            tempClassesTaught.forEach(classTaught => {
                 classTaught.students = classTaught.students.filter(student => student.enrollmentId !== enrollmentId);
             });
             this.setState({ classesTaught: tempClassesTaught });

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import { Button, Card, Divider, Grid, Header, List, Loader, Radio, Segment } from 'semantic-ui-react';
+import { Card, Divider, Grid, Header, Loader, Segment } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
-import Evaluation from '../Modals/Evaluation';
-import Payment from '../Modals/Payment';
 import ContactInfo from '../Modals/ContactInfo';
 import ProfessorMenu from './ProfessorMenu';
 
