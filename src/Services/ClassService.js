@@ -48,6 +48,28 @@ export const getAllClassesDetailed = () => {
         });
 }
 
+export const getClassesTaughtByProfessor = (professorId) => {
+    const uri = `${serverURL}/getClassesTaughtByProfessor/${professorId}`
+    return fetch(uri).then(response => response.json())
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+export const getStudentsEnrolledInClass = (studentId) => {
+    const uri = `${serverURL}/getStudentsEnrolledInClass/${studentId}`
+    return fetch(uri).then(response => response.json())
+        .then(responseJson => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
 export const deleteClass = (classId) => {
     var uri = `${serverURL}/deleteClass`;
     return fetch(uri, {
