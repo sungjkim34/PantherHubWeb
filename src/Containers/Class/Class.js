@@ -3,6 +3,7 @@ import { Loader } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import './Class.css';
 import MainMenu from '../MainMenu/MainMenu';
+import ContactInfo from '../Modals/ContactInfo';
 
 export default class Class extends Component {
 
@@ -10,12 +11,17 @@ export default class Class extends Component {
     //     super(props);
     // }
 
+    toggleContactInfo = () => {
+        this.refs.contactInfoModal.triggerModal();
+    }
+
     renderPage() {
-        const { /*accountInfo,*/ logout, userInfo } = this.props;
+        const { accountInfo, logout, userInfo } = this.props;
 
         return (
             <div className='class-page'>
-                <MainMenu activeItem='class' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout}/>
+                <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo} />
+                <MainMenu activeItem='class' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout} toggleContactInfo={() => this.toggleContactInfo()}/>
                 <div className='class-container'>
                     CLASS
                 </div>

@@ -20,6 +20,7 @@ export default class ProfessorClass extends Component {
     componentWillReceiveProps(nextProps) {
         console.log(nextProps.userInfo);
     }
+    
     componentDidMount() {
         console.log(this.props.userInfo);
 

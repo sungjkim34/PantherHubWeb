@@ -9,6 +9,7 @@ import openSocket from 'socket.io-client';
 import { serverURL } from '../../env';
 import { getAllChat, deleteMessage } from '../../Services/ChatService';
 import moment from 'moment';
+import ContactInfo from '../Modals/ContactInfo';
 
 export default class Chat extends Component {
 
@@ -65,15 +66,20 @@ export default class Chat extends Component {
         else if (accountInfo.accountType === 'professor') {
             return(<ProfessorMenu activeItem='chat' userInfo={userInfo} logout={logout} />);
         } else {
-            return(<MainMenu activeItem='chat' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout} />);
+            return(<MainMenu activeItem='chat' firstName={userInfo.firstName} lastName={userInfo.lastName} logout={logout} toggleContactInfo={() => this.toggleContactInfo()} />);
         }
     }
 
+    toggleContactInfo = () => {
+        this.refs.contactInfoModal.triggerModal();
+    }
+
     renderPage() {
-        const { accountInfo } = this.props;
+        const { accountInfo, userInfo } = this.props;
 
         return (
             <div className='chat-page'>
+                <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo} />
                 {
                     this.renderMenu()
                 }
