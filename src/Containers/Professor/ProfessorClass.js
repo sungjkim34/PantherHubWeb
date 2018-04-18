@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import { Button, Card, Divider, Grid, Header, List, Loader, Radio, Segment } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Button, Card, Divider, Grid, Header, Loader, Segment } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
-import Evaluation from '../Modals/Evaluation';
-import Payment from '../Modals/Payment';
 import ContactInfo from '../Modals/ContactInfo';
 import ProfessorMenu from './ProfessorMenu';
+import moment from 'moment';
 
 import { getClassesTaughtByProfessor, getStudentsEnrolledInClass } from '../../Services/ClassService';
+import { dropClass } from '../../Services/EnrollmentService';
 
 export default class ProfessorClass extends Component {
 
@@ -18,40 +18,84 @@ export default class ProfessorClass extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps.userInfo);
+        !this.state.classesTaught.length && getClassesTaughtByProfessor(nextProps.userInfo.id).then(classesTaught => {
+            classesTaught.forEach(classTaught => {
+                getStudentsEnrolledInClass(classTaught.classId).then(students => {
+                    classTaught.students = students;
+                    this.setState({ classesTaught: [...this.state.classesTaught, classTaught] });
+                });
+            });
+        });
     }
-    
+
     componentDidMount() {
-        console.log(this.props.userInfo);
+        const { userInfo } = this.props;
+        userInfo && getClassesTaughtByProfessor(userInfo.id).then(classesTaught => {
+            classesTaught.forEach(classTaught => {
+                getStudentsEnrolledInClass(classTaught.classId).then(students => {
+                    classTaught.students = students;
+                    this.setState({ classesTaught: [...this.state.classesTaught, classTaught] });
+                });
+            });
+        });
+    }
 
-        // const { userInfo } = this.props;
-
-        // getClassesTaughtByProfessor(userInfo.id).then(classesTaught => {
-        //     this.setState({ classesTaught });
-        //     console.log(classesTaught);
-        // });
+    dropStudent = (enrollmentId) => {
+        dropClass(enrollmentId).then(res => {
+            const tempClassesTaught = [...this.state.classesTaught];
+            tempClassesTaught.map(classTaught => {
+                classTaught.students = classTaught.students.filter(student => student.enrollmentId !== enrollmentId);
+            });
+            this.setState({ classesTaught: tempClassesTaught });
+        });
     }
 
     renderPage() {
 
         const { accountInfo, logout, userInfo } = this.props;
-        
+        const { classesTaught } = this.state;
+
         return (
             <div className='home-page'>
-                <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo}/>
-                <ProfessorMenu activeItem='class' userInfo={userInfo} logout={logout}/>
+                <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo} />
+                <ProfessorMenu activeItem='class' userInfo={userInfo} logout={logout} />
                 <div className='home-container'>
                     <Header as='h2'>PantherHub - Class</Header>
-                    <Card fluid header='Professor Dashboard' description={`Welcome ${userInfo.firstName} ${userInfo.lastName}`}/>
-                    <Grid columns={1} divided>
-                        <Grid.Row stretched>
-                            <Grid.Column>
-                                <Segment>
-                                    <Header as='h2'>Professor</Header>
-                                </Segment>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
+                    <Card fluid header='Professor Class Management' description='View courses currently teaching' />
+                    {
+                        classesTaught.map((classTaught, i) =>
+                            <Segment key={i}>
+                                <Header as='h2'>{classTaught.courseName}</Header>
+                                <Header as='h4'>{moment(classTaught.startTime, 'HH:mm:ss').format('hh:mma')} - {moment(classTaught.endTime, 'HH:mm:ss').format('hh:mma')}</Header>
+                                <Header as='h4'>{JSON.parse(classTaught.classDays).map((day, i) => <span key={i}>{day.charAt(0).toUpperCase()}{day.substring(1, day.length)} </span>)}</Header>
+                                <Divider />
+                                <Header as='h3'>Students</Header>
+                                {
+                                    classTaught.students.length === 0 && <p>You currently have no students enrolled in this class.</p>
+                                }
+                                {
+                                    classTaught.students.map((student, i) =>
+                                        <Card key={i} fluid>
+                                            <Card.Content>
+                                                <Card.Header>
+                                                    {student.firstName} {student.lastName}
+                                                </Card.Header>
+                                                <Card.Meta>
+                                                    {student.major}
+                                                </Card.Meta>
+                                                <Card.Description>
+                                                    {moment(student.dob).format('MMMM DD, YYYY')}
+                                                </Card.Description>
+                                            </Card.Content>
+                                            <Card.Content extra>
+                                                <Button fluid basic color='red' onClick={() => this.dropStudent(student.enrollmentId)}>Drop</Button>
+                                            </Card.Content>
+                                        </Card>
+                                    )
+                                }
+                            </Segment>
+                        )
+                    }
                 </div>
             </div>
         );
@@ -62,11 +106,11 @@ export default class ProfessorClass extends Component {
         const { isLoggedIn, userInfo, accountInfo } = this.props;
 
         if (userInfo) {
-            if(accountInfo.accountType === 'student') return <Redirect to='/' />;
+            if (accountInfo.accountType === 'student') return <Redirect to='/' />;
             else if (accountInfo.accountType === 'professor') return this.renderPage();
             else if (accountInfo.accountType === 'admin') return <Redirect to='/admin' />;
             else return <Redirect to='/login' />
-        } else if (isLoggedIn){
+        } else if (isLoggedIn) {
             return <div><Loader active size='massive'>Loading</Loader></div>;
         } else {
             return <Redirect to='/login' />

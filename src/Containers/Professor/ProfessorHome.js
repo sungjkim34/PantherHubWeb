@@ -32,7 +32,13 @@ export default class Home extends Component {
                         <Grid.Row stretched>
                             <Grid.Column>
                                 <Segment>
-                                    <Header as='h2'>Professor</Header>
+                                    <Header as='h2'>About the Professor Dashboard</Header>
+                                    <p>Welcome to the professor panel for the PantherHub management system.</p>
+                                    <p>Here you have the ability to manage information at an professor level.</p>
+                                    <Divider />
+                                    <Header as='h3'>Class</Header>
+                                    <p>View students currently enrolled in your class.</p>
+                                    <p>Drop students currently enrolled in your class.</p>
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>
