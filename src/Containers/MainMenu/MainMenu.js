@@ -45,7 +45,7 @@ export default class MainMenu extends Component {
                 </Menu.Item>
                 <Menu.Item active={activeItem === 'home'} as={Link} to='/'>Home</Menu.Item>
                 <Menu.Item active={activeItem === 'enrollment'} as={Link} to='/enrollment'>Enrollment</Menu.Item>
-                <Menu.Item active={activeItem === 'class'} as={Link} to='/class'>Class</Menu.Item>
+                {/* <Menu.Item active={activeItem === 'class'} as={Link} to='/class'>Class</Menu.Item> */}
                 <Menu.Item active={activeItem === 'chat'} as={Link} to='/chat'>Chat</Menu.Item>
                 <Menu.Item position='right'>
                     <Dropdown style={{marginRight:'16px'}} pointing={this.state.width >= 769 && 'top right'} trigger={<span style={{marginRight: '5px'}}><Icon name='user' />{firstName}</span>} options={options} />
