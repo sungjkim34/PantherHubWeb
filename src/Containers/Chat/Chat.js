@@ -79,7 +79,7 @@ export default class Chat extends Component {
 
         return (
             <div className='chat-page'>
-                <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo} />
+                { accountInfo.accountType === 'student' && <ContactInfo ref='contactInfoModal' accountInfo={accountInfo} userInfo={userInfo} /> }
                 {
                     this.renderMenu()
                 }
