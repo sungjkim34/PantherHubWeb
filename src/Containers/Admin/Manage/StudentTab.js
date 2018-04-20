@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Button, Form, Header, Icon, Tab, Table } from 'semantic-ui-react';
 import { checkUsername } from '../../../Services/UserService';
 import moment from 'moment';
@@ -23,10 +23,10 @@ export default class StudentTab extends Component {
     }
 
     enterUsername = (username) => {
-        this.setState({student: {...this.state.student, username}});
-        if(username.replace(/ /g, '') !== ''){
+        this.setState({ student: { ...this.state.student, username } });
+        if (username.replace(/ /g, '') !== '') {
             checkUsername(username).then(res => {
-                this.setState({usernameExists: res});
+                this.setState({ usernameExists: res });
             });
         }
     }
@@ -48,7 +48,7 @@ export default class StudentTab extends Component {
     addStudent = () => {
         this.props.addStudent(this.state.student);
         this.setState({
-            student: {...this.state.student, firstName: '', lastName: '', major: '', dob: '', startDate: '', username: '', password: ''},
+            student: { ...this.state.student, firstName: '', lastName: '', major: '', dob: '', startDate: '', username: '', password: '' },
             usernameExists: false
         });
     }
@@ -60,19 +60,19 @@ export default class StudentTab extends Component {
                 <Header as='h3'>Manage Students</Header>
                 <Form>
                     <Form.Group>
-                        <Form.Input label='First Name' placeholder='Enter first name' value={this.state.student.firstName} onChange={(event, data) => this.setState({student: {...this.state.student, firstName: data.value}})} width={8} />
-                        <Form.Input label='Last Name' placeholder='Enter last name' value={this.state.student.lastName} onChange={(event, data) => this.setState({student: {...this.state.student, lastName: data.value}})} width={8} />
+                        <Form.Input label='First Name' placeholder='Enter first name' value={this.state.student.firstName} onChange={(event, data) => this.setState({ student: { ...this.state.student, firstName: data.value } })} width={8} />
+                        <Form.Input label='Last Name' placeholder='Enter last name' value={this.state.student.lastName} onChange={(event, data) => this.setState({ student: { ...this.state.student, lastName: data.value } })} width={8} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Input label='Username' error={this.state.usernameExists} placeholder='Enter username' value={this.state.student.username} onChange={(event, data) => this.enterUsername(data.value)} width={8} />
-                        <Form.Input label='Password' placeholder='Enter password' value={this.state.student.password} onChange={(event, data) => this.setState({student: {...this.state.student, password: data.value}})} width={8} />
+                        <Form.Input label='Password' placeholder='Enter password' value={this.state.student.password} onChange={(event, data) => this.setState({ student: { ...this.state.student, password: data.value } })} width={8} />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Input label='Date of Birth' type='date' value={this.state.student.dob} onChange={(event, data) => this.setState({student: {...this.state.student, dob: data.value}})} width={3} />
-                        <Form.Input label='Start Date' type='date' value={this.state.student.startDate} onChange={(event, data) => this.setState({student: {...this.state.student, startDate: data.value}})} width={3} />
-                        <Form.Dropdown label='Major' placeholder='Select Major' onChange={(event, data) => this.setState({student: {...this.state.student, major: data.value}})} selection options={MAJOR_OPTIONS}/>
+                        <Form.Input label='Date of Birth' type='date' value={this.state.student.dob} onChange={(event, data) => this.setState({ student: { ...this.state.student, dob: data.value } })} width={3} />
+                        <Form.Input label='Start Date' type='date' value={this.state.student.startDate} onChange={(event, data) => this.setState({ student: { ...this.state.student, startDate: data.value } })} width={3} />
+                        <Form.Dropdown label='Major' placeholder='Select Major' onChange={(event, data) => this.setState({ student: { ...this.state.student, major: data.value } })} selection options={MAJOR_OPTIONS} />
                     </Form.Group>
-                    <Button disabled={!this.isFormValid()} onClick={() => this.addStudent()} icon='add user' content='Add'/>
+                    <Button disabled={!this.isFormValid()} onClick={() => this.addStudent()} icon='add user' content='Add' />
                 </Form>
                 <Table celled selectable>
                     <Table.Header>
@@ -94,7 +94,7 @@ export default class StudentTab extends Component {
                                         <Table.Cell>{student.id}</Table.Cell>
                                         <Table.Cell>{student.firstName}</Table.Cell>
                                         <Table.Cell>{student.lastName}</Table.Cell>
-                                        <Table.Cell>{moment(student.dob,).format('MM-DD-YYYY')}</Table.Cell>
+                                        <Table.Cell>{moment(student.dob, ).format('MM-DD-YYYY')}</Table.Cell>
                                         <Table.Cell>{student.major}</Table.Cell>
                                         <Table.Cell>{moment(student.startDate).format('MM-DD-YYYY')}</Table.Cell>
                                         <Table.Cell collapsing>
@@ -107,6 +107,9 @@ export default class StudentTab extends Component {
                         }
                     </Table.Body>
                 </Table>
+                {
+                    !this.props.students.length && <div style={{textAlign: 'center', marginTop: 50, marginBottom: 40}}>There are currently no registered students</div>
+                }
             </Tab.Pane>
         );
     }

@@ -102,6 +102,9 @@ export default class ProfessorTab extends Component {
                         }
                     </Table.Body>
                 </Table>
+                {
+                    !this.props.professors.length && <div style={{textAlign: 'center', marginTop: 50, marginBottom: 40}}>There are currently no registered professors</div>
+                }
             </Tab.Pane>
         );
     }

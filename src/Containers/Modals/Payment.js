@@ -89,7 +89,12 @@ export default class Payment extends Component {
     }
 
     enterAmountToPay = (amountToPay) => {
-        this.setState({amountToPay, totalDue: this.props.totalDue - amountToPay});
+        const amountIsGreaterThanTotalDue = parseFloat(Math.round(amountToPay * 100) / 100) > parseFloat(Math.round(this.props.totalDue * 100) / 100);
+        if(amountIsGreaterThanTotalDue) {
+            this.setState({amountToPay: parseFloat(Math.round(this.props.totalDue * 100) / 100).toFixed(2), totalDue: 0});    
+        } else {
+            this.setState({amountToPay, totalDue: this.props.totalDue - amountToPay});
+        }
     }
 
     checkIfAmountIsValid = () => {

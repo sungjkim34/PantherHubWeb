@@ -76,6 +76,9 @@ export default class CourseTab extends Component {
                         }
                     </Table.Body>
                 </Table>
+                {
+                    !this.props.courses.length && <div style={{textAlign: 'center', marginTop: 50, marginBottom: 40}}>There are currently no registered courses</div>
+                }
             </Tab.Pane>
         );
     }

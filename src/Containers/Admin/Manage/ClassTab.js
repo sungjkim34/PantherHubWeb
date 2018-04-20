@@ -112,6 +112,9 @@ export default class ClassTab extends Component {
                         }
                     </Table.Body>
                 </Table>
+                {
+                    !this.props.classes.length && <div style={{textAlign: 'center', marginTop: 50, marginBottom: 40}}>There are currently no registered classes</div>
+                }
             </Tab.Pane>
         );
     }
